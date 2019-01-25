@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">KU_MAP</string>
     <string name="title_activity_maps">Map</string>
+<<<<<<< HEAD
     <string name="google_maps_key">AIzaSyDsH04_4BjPh0x4MxzWaH1dSApN1egs2fQ</string>
+=======
+>>>>>>> 6072fde63ab224ccb45b932e283cb5125fbb102b
 </resources>
