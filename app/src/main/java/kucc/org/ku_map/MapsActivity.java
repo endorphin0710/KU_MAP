@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
@@ -48,14 +49,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
-        mMap.setBuildingsEnabled(true);
+        mMap.setMinZoomPreference(15);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
         }
+
         // Add a marker in KoreaUniversity and move the camera
-        LatLng KoreaUniversity = new LatLng(37.59000839999999, 127.03186310000001);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(KoreaUniversity,17));
+        LatLng latlng_main = new LatLng(37.589509, 127.032304);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng_main,17));
+
+        mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(37.589509, 127.032304), new LatLng(37.588509, 127.031304))
+                .width(20)
+                .color(0xFF3162C7));
+
     }
 
     private void checkPermission(){
