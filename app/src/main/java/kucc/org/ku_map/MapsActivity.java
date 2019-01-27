@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,12 +57,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        //set on marker click listener
         mMap.setOnMarkerClickListener(this);
+        //set zoom controller
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        //set compass functionality
         mMap.getUiSettings().setCompassEnabled(true);
+        //set minimum zoom 15 (동-scale)
         mMap.setMinZoomPreference(15);
-        mMap.setPadding(0,1400, 0, 0);
+
+        //mMap.setPadding(0,1400, 0, 0);
+
+        //set infoWindowAdapter
+        InfoWindowAdapter infoWindowAdapter = new InfoWindowAdapter(getApplicationContext());
+        googleMap.setInfoWindowAdapter(infoWindowAdapter);
+
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -79,11 +89,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng l3 = new LatLng(Double.valueOf(arr_locaton[6]), Double.valueOf(arr_locaton[7]));
         LatLng l4 = new LatLng(Double.valueOf(arr_locaton[8]), Double.valueOf(arr_locaton[9]));
 
-        mMap.addMarker(new MarkerOptions().position(l0));
-        mMap.addMarker(new MarkerOptions().position(l1));
-        mMap.addMarker(new MarkerOptions().position(l2));
-        mMap.addMarker(new MarkerOptions().position(l3));
-        mMap.addMarker(new MarkerOptions().position(l4));
+        mMap.addMarker(new MarkerOptions().position(l0).title("본관"));
+        mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학이다. 서관이라고도 불림"));
+        mMap.addMarker(new MarkerOptions().position(l2).title("인촌기념관"));
+        mMap.addMarker(new MarkerOptions().position(l3).title("백주년기념관"));
+        mMap.addMarker(new MarkerOptions().position(l4).title("418기념관"));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l0,17));
 
@@ -159,7 +169,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(this, "marker cliked", Toast.LENGTH_SHORT).show();
+
+        marker.showInfoWindow();
 
         return false;
     }

@@ -70,10 +70,6 @@ class Node implements Comparable<Node> {
         return index;
     }
 
-    public int getDistance() {
-        return distance;
-    }
-
     @Override
     public int compareTo(Node o) {
         return distance <= o.distance ? -1 : 1;
