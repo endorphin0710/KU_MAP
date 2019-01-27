@@ -14,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,7 +24,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -30,12 +31,13 @@ import java.util.ArrayList;
 
 import kucc.org.ku_map.dijkstra.Dijkstra;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
     //LOG TAG
     private static final String TAG = "MapsActivity";
 
     private GoogleMap mMap;
+    private View mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapView = mapFragment.getView();
 
         mapFragment.getMapAsync(this);
 
@@ -59,22 +62,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        //set on marker click listener
-        mMap.setOnMarkerClickListener(this);
         //set zoom controller
         mMap.getUiSettings().setZoomControlsEnabled(true);
         //set compass functionality
         mMap.getUiSettings().setCompassEnabled(true);
         //set minimum zoom 15 (동-scale)
         mMap.setMinZoomPreference(15);
+        //current location button relocation
+        View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        rlp.setMargins(0,0,0,350);
 
-        //mMap.setPadding(0,1400, 0, 0);
-
-        //set infoWindowAdapter
-        InfoWindowAdapter infoWindowAdapter = new InfoWindowAdapter(getApplicationContext());
-        googleMap.setInfoWindowAdapter(infoWindowAdapter);
-
-
+        //permission check & enable my location
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
@@ -89,14 +90,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng l3 = new LatLng(Double.valueOf(arr_locaton[6]), Double.valueOf(arr_locaton[7]));
         LatLng l4 = new LatLng(Double.valueOf(arr_locaton[8]), Double.valueOf(arr_locaton[9]));
 
-        mMap.addMarker(new MarkerOptions().position(l0).title("본관"));
-        mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학이다. 서관이라고도 불림"));
-        mMap.addMarker(new MarkerOptions().position(l2).title("인촌기념관"));
-        mMap.addMarker(new MarkerOptions().position(l3).title("백주년기념관"));
-        mMap.addMarker(new MarkerOptions().position(l4).title("418기념관"));
-
+        mMap.addMarker(new MarkerOptions().position(l0).title("본관").snippet("본관 설명"));
+        mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학 설명"));
+        mMap.addMarker(new MarkerOptions().position(l2).title("인촌기념관").snippet("인촌기념관 설명"));
+        mMap.addMarker(new MarkerOptions().position(l3).title("백주년기념관").snippet("백주념기념관 설명"));
+        mMap.addMarker(new MarkerOptions().position(l4).title("418기념관").snippet("418기념관 설명"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l0,17));
 
+        //draw path from source to destination using dijkstra algorithm
         Dijkstra dijkstra = new Dijkstra();
         ArrayList<Integer> paths = dijkstra.DA(4,2);
         for(int i = 0; i < paths.size()-1; i++){
@@ -127,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         GPSListener gpsListener = new GPSListener();
         long minTime = 5000;
@@ -139,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public void onLocationChanged(Location location) {
-
+            //custom code on location changed : nothing for now
         }
 
         @Override
@@ -167,11 +168,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-
-        marker.showInfoWindow();
-
-        return false;
-    }
 }
