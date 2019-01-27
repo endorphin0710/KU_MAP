@@ -1,8 +1,15 @@
 <resources>
+
     <string name="app_name">KU_MAP</string>
     <string name="title_activity_maps">Map</string>
-<<<<<<< HEAD
     <string name="google_maps_key">AIzaSyDsH04_4BjPh0x4MxzWaH1dSApN1egs2fQ</string>
-=======
->>>>>>> 6072fde63ab224ccb45b932e283cb5125fbb102b
+
+    <string-array name="locations">
+        <item>37.589503</item><item>127.032323</item> <!--본관(0)-->
+        <item>37.588540</item><item>127.031765</item> <!--문과대학(1)-->
+        <item>37.589785</item><item>127.030617</item> <!--인촌기념관(2)-->
+        <item>37.589436</item><item>127.034377</item> <!--백주념기념관(3)-->
+        <item>37.586919</item><item>127.032859</item> <!--418기념관(4)-->
+    </string-array>
+
 </resources>

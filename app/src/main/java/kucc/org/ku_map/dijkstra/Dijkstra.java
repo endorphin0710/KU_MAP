@@ -7,13 +7,12 @@ import java.util.PriorityQueue;
 public class Dijkstra {
 
     final static int INF = Integer.MAX_VALUE;
-    static int[][] adj
-            = {{0,2,INF,INF,INF,INF},
-            {2,0,4,1,INF,3},
-            {INF,4,0,INF,2,INF},
-            {INF,1,INF,0,6,1},
-            {INF,INF,2,6,0,INF},
-            {INF,3,INF,1,INF,0}
+    static int[][] adj = {
+            {0,INF,1,2,INF},
+            {INF,0,3,INF,1},
+            {1,3,0,INF,INF},
+            {2,INF,INF,0,3},
+            {INF,1,INF,3,0},
     };
     static boolean[] visited = new boolean[adj.length];
     static int[] d = new int[adj.length];
