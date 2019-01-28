@@ -43,14 +43,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = "MapsActivity";
 
     /** DB **/
-    SQLiteDatabase db;
+    private SQLiteDatabase db;
 
     private GoogleMap mMap;
     private View mapView;
+
     private Button btn_pathfind;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
+
     private String[] arr_latlng;
+    private Dijkstra dijkstra;
+
+    private LatLng l0,l1,l2,l3,l4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,35 +127,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
-        init_markers();
+        l0 = new LatLng(Double.valueOf(arr_latlng[0]), Double.valueOf(arr_latlng[1]));
+        l1 = new LatLng(Double.valueOf(arr_latlng[2]), Double.valueOf(arr_latlng[3]));
+        l2 = new LatLng(Double.valueOf(arr_latlng[4]), Double.valueOf(arr_latlng[5]));
+        l3 = new LatLng(Double.valueOf(arr_latlng[6]), Double.valueOf(arr_latlng[7]));
+        l4 = new LatLng(Double.valueOf(arr_latlng[8]), Double.valueOf(arr_latlng[9]));
 
         /** Add path-find button **/
+        dijkstra = new Dijkstra();
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_pathfind.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
-                    /** Draw path from source to destination using dijkstra algorithm **/
 
+                    /** retrieve source and destination marker indeces from database**/
                     int source = retrieve_index(tv_source.getText().toString());
-                    Log.i(TAG, "source index : " + source);
-                    Log.i(TAG, "source = " + tv_source.getText());
-                    Log.i(TAG, "source is null : " + tv_source.getText().equals(""));
                     int dest = retrieve_index(tv_dest.getText().toString());
-                    Log.i(TAG, "destination index : " + dest);
-                    Log.i(TAG, "destination = " + tv_dest.getText());
-                    Log.i(TAG, "destination is null : " + tv_dest.getText().equals(""));
                     if(source == -1 || dest == -1) return;
 
+                    /** Clear google map & re-make markers **/
                     mMap.clear();
                     init_markers();
 
-                    Dijkstra dijkstra = new Dijkstra();
+                    /** Get marker indeces of markers on the path **/
                     ArrayList<Integer> paths = dijkstra.DA(source,dest);
-                    Log.i(TAG, "path size = " + paths.size());
 
+                    /** Draw path from source to destination using dijkstra algorithm **/
                     for(int i = 0; i < paths.size()-1; i++){
-                        Log.i(TAG, "foor loop in");
                         mMap.addPolyline(new PolylineOptions()
                                 .add(new LatLng(Double.valueOf(arr_latlng[paths.get(i)*2]),Double.valueOf(arr_latlng[paths.get(i)*2+1]))
                                         ,new LatLng(Double.valueOf(arr_latlng[paths.get(i+1)*2]),Double.valueOf(arr_latlng[paths.get(i+1)*2+1])))
@@ -295,6 +299,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return i;
     }
 
+    /** Check if EditText is empty or not **/
     private boolean isEmpty(EditText et){
        if(et.getText().toString().trim().length() > 0){
            return false;
@@ -303,13 +308,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        }
     }
 
+    /** Initiate Markers **/
     private void init_markers(){
-        LatLng l0 = new LatLng(Double.valueOf(arr_latlng[0]), Double.valueOf(arr_latlng[1]));
-        LatLng l1 = new LatLng(Double.valueOf(arr_latlng[2]), Double.valueOf(arr_latlng[3]));
-        LatLng l2 = new LatLng(Double.valueOf(arr_latlng[4]), Double.valueOf(arr_latlng[5]));
-        LatLng l3 = new LatLng(Double.valueOf(arr_latlng[6]), Double.valueOf(arr_latlng[7]));
-        LatLng l4 = new LatLng(Double.valueOf(arr_latlng[8]), Double.valueOf(arr_latlng[9]));
-
         mMap.addMarker(new MarkerOptions().position(l0).title("본관").snippet("본관 설명"));
         mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학 설명"));
         mMap.addMarker(new MarkerOptions().position(l2).title("인촌기념관").snippet("인촌기념관 설명"));
