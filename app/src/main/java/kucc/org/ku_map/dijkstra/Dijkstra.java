@@ -19,12 +19,14 @@ public class Dijkstra {
 
     public static ArrayList<Integer> DA(int start, int destination) {
 
+        Arrays.fill(d, INF);
+        Arrays.fill(visited, false);
+
         PriorityQueue<Node> pq = new PriorityQueue<Node>();
         ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < adj.length; i++) {
             paths.add(new ArrayList<Integer>());
         }
-        Arrays.fill(d, INF);
         d[start] = 0;
         paths.get(start).add(start);
         pq.offer(new Node(start, d[start]));
