@@ -77,8 +77,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <EditText
-            android:id="@+id/editText"
+        <AutoCompleteTextView
+            android:id="@+id/actv_source"
             android:layout_width="250dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
@@ -91,13 +91,16 @@
             android:hint="출발지"
             android:inputType="text"
             android:paddingLeft="10dp"
-            android:textSize="12dp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <requestFocus/>
+        </AutoCompleteTextView>
 
-        <EditText
-            android:id="@+id/editText2"
+
+        <AutoCompleteTextView
+            android:id="@+id/actv_dest"
             android:layout_width="250dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
@@ -111,7 +114,7 @@
             android:hint="목적지"
             android:inputType="text"
             android:paddingLeft="10dp"
-            android:textSize="12dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

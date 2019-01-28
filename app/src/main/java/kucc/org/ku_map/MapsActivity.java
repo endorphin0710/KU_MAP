@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,7 +35,7 @@ import kucc.org.ku_map.dijkstra.Dijkstra;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
-    //LOG TAG
+    /** LOG TAG **/
     private static final String TAG = "MapsActivity";
 
     private GoogleMap mMap;
@@ -44,13 +46,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        /** Check location permission **/
         checkPermission();
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             startLocationService();
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        /** Get suggestion array from res **/
+        String[] suggestions = getResources().getStringArray(R.array.suggestion);
+
+        /** Instantiate ArrayAdapter object with suggestion array **/
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, suggestions);
+
+        /** Set adapter & threshold of auto-complete text view eac **/
+        AutoCompleteTextView tv_source = (AutoCompleteTextView)findViewById(R.id.actv_source);
+        tv_source.setThreshold(1);
+        tv_source.setAdapter(arrayAdapter);
+        AutoCompleteTextView tv_dest = (AutoCompleteTextView)findViewById(R.id.actv_dest);
+        tv_dest.setThreshold(1);
+        tv_dest.setAdapter(arrayAdapter);
+
+        /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
 
@@ -61,34 +78,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        /** Reference to a google map object **/
         mMap = googleMap;
-        //set zoom controller
+
+        /** Set zoom controller **/
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        //set compass functionality
+
+        /** Set compass functionality **/
         mMap.getUiSettings().setCompassEnabled(true);
-        //set minimum zoom 15 (동-scale)
+
+        /** Set minimum zoom to 15 (동-scale) **/
         mMap.setMinZoomPreference(15);
-        //current location button relocation
+
+        /** Current location button relocation **/
         View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
         rlp.setMargins(0,0,0,350);
 
-        //permission check & enable my location
+        /** Permission check & enable my location **/
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
         }
 
-        // Add a marker in KoreaUniversity and move the camera
-        String[] arr_locaton = getResources().getStringArray(R.array.locations);
+        /** Instantiate markers **/
+        String[] arr_latlng = getResources().getStringArray(R.array.latlng);
 
-        LatLng l0 = new LatLng(Double.valueOf(arr_locaton[0]), Double.valueOf(arr_locaton[1]));
-        LatLng l1 = new LatLng(Double.valueOf(arr_locaton[2]), Double.valueOf(arr_locaton[3]));
-        LatLng l2 = new LatLng(Double.valueOf(arr_locaton[4]), Double.valueOf(arr_locaton[5]));
-        LatLng l3 = new LatLng(Double.valueOf(arr_locaton[6]), Double.valueOf(arr_locaton[7]));
-        LatLng l4 = new LatLng(Double.valueOf(arr_locaton[8]), Double.valueOf(arr_locaton[9]));
+        LatLng l0 = new LatLng(Double.valueOf(arr_latlng[0]), Double.valueOf(arr_latlng[1]));
+        LatLng l1 = new LatLng(Double.valueOf(arr_latlng[2]), Double.valueOf(arr_latlng[3]));
+        LatLng l2 = new LatLng(Double.valueOf(arr_latlng[4]), Double.valueOf(arr_latlng[5]));
+        LatLng l3 = new LatLng(Double.valueOf(arr_latlng[6]), Double.valueOf(arr_latlng[7]));
+        LatLng l4 = new LatLng(Double.valueOf(arr_latlng[8]), Double.valueOf(arr_latlng[9]));
 
         mMap.addMarker(new MarkerOptions().position(l0).title("본관").snippet("본관 설명"));
         mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학 설명"));
@@ -97,13 +119,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(l4).title("418기념관").snippet("418기념관 설명"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l0,17));
 
-        //draw path from source to destination using dijkstra algorithm
+        /** Draw path from source to destination using dijkstra algorithm **/
         Dijkstra dijkstra = new Dijkstra();
         ArrayList<Integer> paths = dijkstra.DA(4,2);
         for(int i = 0; i < paths.size()-1; i++){
             mMap.addPolyline(new PolylineOptions()
-                    .add(new LatLng(Double.valueOf(arr_locaton[paths.get(i)*2]),Double.valueOf(arr_locaton[paths.get(i)*2+1]))
-                        ,new LatLng(Double.valueOf(arr_locaton[paths.get(i+1)*2]),Double.valueOf(arr_locaton[paths.get(i+1)*2+1])))
+                    .add(new LatLng(Double.valueOf(arr_latlng[paths.get(i)*2]),Double.valueOf(arr_latlng[paths.get(i)*2+1]))
+                        ,new LatLng(Double.valueOf(arr_latlng[paths.get(i+1)*2]),Double.valueOf(arr_latlng[paths.get(i+1)*2+1])))
                     .width(20)
                     .color(0xFF368AFF));
         }
@@ -140,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public void onLocationChanged(Location location) {
-            //custom code on location changed : nothing for now
+            /** Custom code on location changed : nothing for now **/
         }
 
         @Override
@@ -159,6 +181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /** Convert vector image into bitmap format **/
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
@@ -168,4 +191,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    public static int getPixelsFromDp(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dp * scale + 0.5f);
+    }
 }
