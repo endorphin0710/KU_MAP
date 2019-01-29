@@ -19,8 +19,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private View mapView;
 
-    private Button btn_pathfind;
+    private ImageButton btn_pathfind;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
 
@@ -112,19 +112,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** Set minimum zoom to 15 (동-scale) **/
         mMap.setMinZoomPreference(15);
 
-        /** Current location button relocation **/
-        View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-        rlp.setMargins(0,0,0,350);
-
-        /** Permission check & enable my location **/
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            mMap.setMyLocationEnabled(true);
-        }
-
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
         l0 = new LatLng(Double.valueOf(arr_latlng[0]), Double.valueOf(arr_latlng[1]));
@@ -133,7 +120,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         l3 = new LatLng(Double.valueOf(arr_latlng[6]), Double.valueOf(arr_latlng[7]));
         l4 = new LatLng(Double.valueOf(arr_latlng[8]), Double.valueOf(arr_latlng[9]));
 
-        /** Add path-find button **/
+        /** Add markers **/
+        init_markers();
+
+        /** Current location button relocation **/
+        View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        rlp.setMargins(0,0,0,300);
+
+        /** Permission check & enable my location **/
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            mMap.setMyLocationEnabled(true);
+        }
+
+        /** Add path-find button and onClickListener **/
         dijkstra = new Dijkstra();
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_pathfind.setOnClickListener(new View.OnClickListener(){
@@ -146,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     int dest = retrieve_index(tv_dest.getText().toString());
                     if(source == -1 || dest == -1) return;
 
-                    /** Clear google map & re-make markers **/
+                    /** Clear google map & add markers **/
                     mMap.clear();
                     init_markers();
 
