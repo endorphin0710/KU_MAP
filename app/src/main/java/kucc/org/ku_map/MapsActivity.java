@@ -15,7 +15,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -80,13 +83,110 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** Instantiate ArrayAdapter object with suggestion array **/
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_select_dialog_item, suggestions);
 
-        /** Set adapter & threshold of auto-complete text view eac **/
+        /** Set adapter & threshold of auto-complete text view **/
         tv_source = (AutoCompleteTextView)findViewById(R.id.actv_source);
         tv_source.setThreshold(1);
         tv_source.setAdapter(arrayAdapter);
         tv_dest = (AutoCompleteTextView)findViewById(R.id.actv_dest);
         tv_dest.setThreshold(1);
         tv_dest.setAdapter(arrayAdapter);
+
+        /** Add TextChangedListener and set clear drawable on the right side of text view if text length > 0 **/
+        tv_source.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count > 0){
+                    tv_source.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.clear), null);
+                }else{
+                    tv_source.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        tv_dest.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count > 0){
+                    tv_dest.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.clear), null);
+                }else{
+                    tv_dest.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        /** Add OnTouchListener on drawable in the text view **/
+        tv_source.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(tv_source.getText().length() > 0 && event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (tv_source.getRight() - tv_source.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        tv_source.setText("");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        tv_dest.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(tv_dest.getText().length() > 0 && event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (tv_dest.getRight() - tv_dest.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        tv_dest.setText("");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        /** Add path-find button and onClickListener **/
+        dijkstra = new Dijkstra();
+        btn_pathfind = findViewById(R.id.btn_pathfind);
+        btn_pathfind.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
+
+                    /** retrieve source and destination marker indeces from database**/
+                    int source = retrieve_index(tv_source.getText().toString());
+                    int dest = retrieve_index(tv_dest.getText().toString());
+                    if(source == -1 || dest == -1) return;
+
+                    /** Clear google map & add markers **/
+                    mMap.clear();
+                    init_markers();
+
+                    /** Get marker indeces of markers on the path **/
+                    ArrayList<Integer> paths = dijkstra.DA(source,dest);
+
+                    /** Draw path from source to destination using dijkstra algorithm **/
+                    for(int i = 0; i < paths.size()-1; i++){
+                        mMap.addPolyline(new PolylineOptions()
+                                .add(new LatLng(Double.valueOf(arr_latlng[paths.get(i)*2]),Double.valueOf(arr_latlng[paths.get(i)*2+1]))
+                                        ,new LatLng(Double.valueOf(arr_latlng[paths.get(i+1)*2]),Double.valueOf(arr_latlng[paths.get(i+1)*2+1])))
+                                .width(20)
+                                .color(0xFF368AFF));
+                    }
+                }
+            }
+        });
 
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -135,38 +235,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
         }
-
-        /** Add path-find button and onClickListener **/
-        dijkstra = new Dijkstra();
-        btn_pathfind = findViewById(R.id.btn_pathfind);
-        btn_pathfind.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
-
-                    /** retrieve source and destination marker indeces from database**/
-                    int source = retrieve_index(tv_source.getText().toString());
-                    int dest = retrieve_index(tv_dest.getText().toString());
-                    if(source == -1 || dest == -1) return;
-
-                    /** Clear google map & add markers **/
-                    mMap.clear();
-                    init_markers();
-
-                    /** Get marker indeces of markers on the path **/
-                    ArrayList<Integer> paths = dijkstra.DA(source,dest);
-
-                    /** Draw path from source to destination using dijkstra algorithm **/
-                    for(int i = 0; i < paths.size()-1; i++){
-                        mMap.addPolyline(new PolylineOptions()
-                                .add(new LatLng(Double.valueOf(arr_latlng[paths.get(i)*2]),Double.valueOf(arr_latlng[paths.get(i)*2+1]))
-                                        ,new LatLng(Double.valueOf(arr_latlng[paths.get(i+1)*2]),Double.valueOf(arr_latlng[paths.get(i+1)*2+1])))
-                                .width(20)
-                                .color(0xFF368AFF));
-                    }
-                }
-            }
-        });
 
     }
 
