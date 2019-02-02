@@ -5,19 +5,168 @@
     <string name="google_maps_key">AIzaSyDsH04_4BjPh0x4MxzWaH1dSApN1egs2fQ</string>
 
     <string-array name="latlng">
-        <item>37.589503</item><item>127.032323</item> <!-- 본관(0) -->
-        <item>37.588540</item><item>127.031765</item> <!-- 문과대학(1) -->
-        <item>37.589785</item><item>127.030617</item> <!-- 인촌기념관(2) -->
-        <item>37.589436</item><item>127.034377</item> <!-- 백주념기념관(3) -->
-        <item>37.586919</item><item>127.032859</item> <!-- 418기념관(4) -->
+        <item>37.586785</item><item>127.029899</item> <!-- 정경대 후문(0) -->
+        <item>37.586793</item><item>127.030071</item> <!-- 정경대(1) -->
+        <item>37.586733</item><item>127.030253</item> <!-- (2) -->
+        <item>37.586882</item><item>127.030411</item> <!-- 파이빌리지(3) -->
+        <item>37.587090</item><item>127.030666</item> <!-- 미디어관(4) -->
+        <item>37.587194</item><item>127.030795</item> <!-- 시네마트랩(5) -->
+        <item>37.587305</item><item>127.031079</item> <!-- (6) -->
+        <item>37.587560</item><item>127.030644</item> <!-- 타이거플라자, 정경대(7)-->
+        <item>37.587690</item><item>127.030703</item> <!-- (8) -->
+        <item>37.587971</item><item>127.031030</item> <!-- 국제관(9) -->
+        <item>37.588111</item><item>127.031191</item> <!-- (10) -->
+        <item>37.587305</item><item>127.031079</item> <!-- 홍보관(인문사회관)(11) -->
+        <item>37.587787</item><item>127.031607</item> <!-- (12) -->
+        <item>37.587030</item><item>127.031497</item> <!-- 교양관(13) -->
+        <item>37.587243</item><item>127.031754</item> <!-- 민주광장(14) -->
+        <item>37.587481</item><item>127.032011</item> <!-- (15) -->
+        <item>37.586818</item><item>127.031802</item> <!-- (16)-->
+        <item>37.587035</item><item>127.032049</item> <!-- 학생회관(17)-->
+        <item>37.587250</item><item>127.032296</item> <!-- (18) -->
+        <item>37.587218</item><item>127.032741</item> <!-- 4.18기념관(19) -->
+        <item>37.587318</item><item>127.033218</item> <!-- 농구장(20) -->
+        <item>37.587922</item><item>127.033848</item> <!-- (21) -->
+        <item>37.588149</item><item>127.033907</item> <!-- (22) -->
+        <item>37.588145</item><item>127.034264</item> <!-- 정문(23) -->
+        <item>37.588596</item><item>127.034270</item> <!-- (24) -->
+        <item>37.588602</item><item>127.033573</item> <!-- 중앙광장(25) -->
+        <item>37.588151</item><item>127.033401</item> <!-- 중엉광장지하 왼쪽입구(26) -->
+        <item>37.588812</item><item>127.034125</item> <!-- 중앙광장지하 오른쪽입구(27) -->
+        <item>37.588914</item><item>127.034578</item> <!-- (28) -->
+        <item>37.589165</item><item>127.034248</item> <!-- 백주년기념관(29) -->
+        <item>37.589135</item><item>127.034838</item> <!-- 박물관(30) -->
+        <item>37.589337</item><item>127.035053</item> <!-- (31) -->
+        <item>37.589286</item><item>127.035361</item> <!-- (32) -->
+        <item>37.589628</item><item>127.035820</item> <!-- 고려대역 1번출(33) -->
+        <item>37.589566</item><item>127.035056</item> <!-- LG-POSCO 경영관(34) -->
+        <item>37.589827</item><item>127.034734</item> <!-- (35) -->
+        <item>37.589947</item><item>127.034893</item> <!-- (36) -->
+        <item>37.590172</item><item>127.035225</item> <!-- LG-POSCO 경영관(37) -->
+        <item>37.590389</item><item>127.035472</item> <!-- 현대자동차 경영관(38) -->
+        <item>37.590138</item><item>127.034636</item> <!-- (39) -->
+        <item>37.590263</item><item>127.034802</item> <!-- 경영대학 잔디밭(40) -->
+        <item>37.590397</item><item>127.034939</item> <!-- 경영대학 본관(41) -->
+        <item>37.590303</item><item>127.034451</item> <!-- (42) -->
+        <item>37.590533</item><item>127.034717</item> <!-- (43) -->
+        <item>37.590125</item><item>127.034352</item> <!-- (44) -->
+        <item>37.589755</item><item>127.033896</item> <!-- (45) -->
+        <item>37.589589</item><item>127.033714</item> <!-- 호상(46) -->
+        <item>37.589325</item><item>127.033411</item> <!-- 중앙광장지하 2번 게이트(47) -->
+        <item>37.589142</item><item>127.033180</item> <!-- (48) -->
+        <item>37.588993</item><item>127.033011</item> <!-- (49) -->
+        <item>37.590326</item><item>127.034097</item> <!-- (50) -->
+        <item>37.590462</item><item>127.034247</item> <!-- (51) -->
+        <item>37.590579</item><item>127.034370</item> <!-- 중앙도서관(52)-->
+        <item>37.590896</item><item>127.034595</item> <!-- 사범대학 본관(53) -->
+        <item>37.591102</item><item>127.034329</item> <!-- (54) -->
+        <item>37.591247</item><item>127.034514</item> <!-- 사범대학 신관(55) -->
+        <item>37.591164</item><item>127.034286</item> <!-- (56) -->
+        <item>37.591277</item><item>127.034117</item> <!-- 운초우선교육관(57) -->
+        <item>37.591379</item><item>127.033897</item> <!-- (58) -->
+        <item>37.590928</item><item>127.033353</item> <!-- (59) -->
+        <item>37.590864</item><item>127.033407</item> <!-- (60) -->
+        <item>37.590694</item><item>127.033627</item> <!-- 법학관 구관(61) -->
+        <item>37.590841</item><item>127.033791</item> <!-- 아세아문제연구소(62) -->
+        <item>37.590505</item><item>127.033858</item> <!-- (63) -->
+        <item>37.590263</item><item>127.033574</item> <!-- (64) -->
+        <item>37.590123</item><item>127.033767</item> <!-- (65) -->
+        <item>37.589700</item><item>127.033244</item> <!-- 대학원(66) -->
+        <item>37.589925</item><item>127.032895</item> <!-- (67) -->
+        <item>37.589827</item><item>127.032793</item> <!-- (68) -->
+        <item>37.590089</item><item>127.032618</item> <!-- 동원글로벌리더십홀(69) -->
+        <item>37.590250</item><item>127.032795</item> <!-- (70) -->
+        <item>37.590552</item><item>127.033087</item> <!-- (71) -->
+        <item>37.591062</item><item>127.033178</item> <!-- CJ법학관(72) -->
+        <item>37.591228</item><item>127.032958</item> <!-- 법대 후문(73) -->
+        <item>37.590994</item><item>127.033148</item> <!-- (74)-->
+        <item>37.590866</item><item>127.032947</item> <!-- (75) -->
+        <item>37.590768</item><item>127.033070</item> <!-- 해송법학도서관(76) -->
+        <item>37.590713</item><item>127.032794</item> <!-- 법학관 신관(77) -->
+        <item>37.590437</item><item>127.032504</item> <!-- (78) -->
+        <item>37.589755</item><item>127.032323</item> <!-- 다람쥐길(79) -->
+        <item>37.589755</item><item>127.032323</item> <!-- 다람쥐길 옆 물탱크(80) -->
+        <item>37.589387</item><item>127.031956</item> <!-- (81) -->
+        <item>37.589442</item><item>127.031326</item> <!--(82) -->
+        <item>37.589547</item><item>127.030956</item> <!-- 인촌기념관(83) -->
+        <item>37.589247</item><item>127.031104</item> <!-- (84) -->
+        <item>37.588712</item><item>127.031155</item> <!-- 조지훈 시비(85)-->
+        <item>37.588499</item><item>127.031185</item> <!-- (86) -->
+        <item>37.588680</item><item>127.031408</item> <!-- (87) -->
+        <item>37.588975</item><item>127.031333</item> <!-- (88) -->
+        <item>37.589171</item><item>127.031558</item> <!-- (89) -->
+        <item>37.588786</item><item>127.031663</item> <!-- (90) -->
+        <item>37.588693</item><item>127.031793</item> <!-- (91) -->
+        <item>37.588880</item><item>127.032018</item> <!-- (92) -->
+        <item>37.588723</item><item>127.032235</item> <!-- (93) -->
+        <item>37.588440</item><item>127.031892</item> <!-- 문과대학(94) -->
+        <item>37.588336</item><item>127.031779</item> <!-- (95) -->
+        <item>37.588111</item><item>127.031546</item> <!-- (96) -->
+        <item>37.589223</item><item>127.031919</item> <!-- (97) -->
+        <item>37.589376</item><item>127.031991</item> <!-- (98) -->
+        <item>37.589833</item><item>127.032552</item> <!-- (99) -->
+        <item>37.589654</item><item>127.032740</item> <!-- (100) -->
+        <item>37.589424</item><item>127.032914</item> <!-- (101) -->
+        <item>37.589122</item><item>127.032136</item> <!-- (102) -->
+        <item>37.589396</item><item>127.032442</item> <!-- 본관(103) -->
+        <item>37.589020</item><item>127.032477</item> <!-- (104) -->
+        <item>37.589194</item><item>127.032681</item> <!-- 인촌김성수 동상(105) -->
+        <item>37.588856</item><item>127.032850</item> <!-- (106) -->
+        <item>37.588671</item><item>127.032657</item> <!-- 중앙광장지하 1번 게이트(107)-->
+        <item>37.588467</item><item>127.032182</item> <!-- (108)-->
+        <item>37.588812</item><item>127.030482</item> <!-- 수당삼양 패컬티하우스(109)-->
     </string-array>
 
     <string-array name="suggestion">
-        <!-- index:0 --> <item>본관</item>
-        <!-- index:1 --> <item>문과대학</item><item>문대</item><item>서관</item>
-        <!-- index:2 --> <item>인촌기념관</item><item>인촌</item>
-        <!-- index:3 --> <item>백주념기념관</item><item>100주년기념관</item><item>백기</item>
-        <!-- index:4 --> <item>418기념관</item><item>418</item>
+        <!-- index:0 --> <item>정경대 후문</item><item>정후</item>
+        <!-- index:1 --> <item>정경대학</item><item>정경대</item><item>정대</item>
+        <!-- index:3 --> <item>파이빌리지</item><item>PI VILLIAGE</item><item>파이빌</item>
+        <!-- index:4 --> <item>미디어관</item>
+        <!-- index:5 --> <item>시네마트랩</item><item>CINEMA TRAP</item><item>영화관</item>
+        <!-- index:7 --> <item>타이거플라자</item><item>TIGER PLAZA</item>
+        <!-- index:9 --> <item>국제관</item>
+        <!-- index:11 --> <item>홍보관</item>
+        <!-- index:13 --> <item>교양관</item><item>우당교양관</item>
+        <!-- index:14 --> <item>민주광장</item><item>민광</item>
+        <!-- index:17 --> <item>학생회관</item><item>학관</item>
+        <!-- index:19 --> <item>418기념관</item><item>사일팔기념관</item>
+        <!-- index:20 --> <item>농구장</item><item>닭장</item>
+        <!-- index:23 --> <item>정문</item>
+        <!-- index:25 --> <item>중앙광장</item><item>중광</item>
+        <!-- index:26 --> <item>중엉광장지하 왼쪽입구</item><item>중지 왼쪽입구</item>
+        <!-- index:27 --> <item>중엉광장지하 오른쪽입구</item><item>중지 오른쪽입구</item>
+        <!-- index:29 --> <item>백주년기념 삼성관</item><item>백주년기념관</item><item>100주년기념관</item><item>백기</item>
+        <!-- index:30 --> <item>박물관</item>
+        <!-- index:33 --> <item>고려대역 1번출구</item><item>고대역 1번출구</item>
+        <!-- index:34 --> <item>LG_POSCO 경영관(옆)</item><item>엘포(옆)</item>
+        <!-- index:37 --> <item>LG_POSCO 경영관(정문)</item><item>엘포(정문)</item>
+        <!-- index:38 --> <item>현대자동차 경영관</item><item>현차</item>
+        <!-- index:40 --> <item>경영대학 본관 잔디밭</item>
+        <!-- index:41 --> <item>경영대학 본관</item><item>경본</item>
+        <!-- index:46 --> <item>호상</item>
+        <!-- index:47 --> <item>중앙광장지하 2번 게이트</item>
+        <!-- index:52 --> <item>중앙도서관(신관)</item><item>중도</item>
+        <!-- index:53 --> <item>사범대학 본관</item>
+        <!-- index:55 --> <item>사범대학 신관</item>
+        <!-- index:57 --> <item>운초우선 교육관</item><item>교육관</item>
+        <!-- index:61 --> <item>법학관 구관</item><item>법구</item><item>구법</item>
+        <!-- index:62 --> <item>아세아문제연구소</item>
+        <!-- index:66 --> <item>대학원</item><item>중앙도서관(대학원)</item>
+        <!-- index:69 --> <item>동원글로벌리더십홀</item><item>동글리</item>
+        <!-- index:72 --> <item>CJ법학관</item><item>씨법</item><item>로스쿨</item><item>LAW SCHOOL</item>
+        <!-- index:73 --> <item>법대후문</item><item>법후</item>
+        <!-- index:76 --> <item>해송법학도서관</item><item>해도</item>
+        <!-- index:77 --> <item>법학관 신관</item><item>법신</item><item>신법</item>
+        <!-- index:79 --> <item>다람쥐길</item>
+        <!-- index:80 --> <item>다람쥐길 옆 물탱크</item>
+        <!-- index:83 --> <item>인촌기념관</item><item>인촌</item>
+        <!-- index:85 --> <item>조지훈 시비</item>
+        <!-- index:94 --> <item>문과대학</item><item>문대</item><item>서관</item>
+        <!-- index:103 --> <item>본관</item>
+        <!-- index:105 --> <item>김성수 동상</item><item>인촌 김성수 동상</item>
+        <!-- index:107 --> <item>중앙광장지하 1번 게이트</item>
+        <!-- index:109 --> <item>수당삼양 패컬티하우스</item><item>패컬티하우스</item>
+
     </string-array>
 
 </resources>

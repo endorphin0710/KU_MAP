@@ -58,7 +58,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String[] arr_latlng;
     private Dijkstra dijkstra;
 
-    private LatLng l0,l1,l2,l3,l4;
+    private static LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,
+                   l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,
+                   l40,l41,l42,l43,l44,l45,l46,l47,l48,l49,l50,l51,l52,l53,l54,l55,l56,l57,l58,l59,
+                   l60,l61,l62,l63,l64,l65,l66,l67,l68,l69,l70,l71,l72,l73,l74,l75,l76,l77,l78,l79,
+                   l80,l81,l82,l83,l84,l85,l86,l87,l88,l89,l90,l91,l92,l93,l94,l95,l96,l97,l98,l99,
+                   l100,l101,l102,l103,l104,l105,l106,l107,l108,l109;
+    private static LatLng[] latlngs = {
+            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,
+            l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,
+            l40,l41,l42,l43,l44,l45,l46,l47,l48,l49,l50,l51,l52,l53,l54,l55,l56,l57,l58,l59,
+            l60,l61,l62,l63,l64,l65,l66,l67,l68,l69,l70,l71,l72,l73,l74,l75,l76,l77,l78,l79,
+            l80,l81,l82,l83,l84,l85,l86,l87,l88,l89,l90,l91,l92,l93,l94,l95,l96,l97,l98,l99,
+            l100,l101,l102,l103,l104,l105,l106,l107,l108,l109};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         /** database **/
         db = openOrCreateDatabase("kumap", MODE_PRIVATE, null);
-        init_tables();
-        save_rows();
 
         /** Check location permission **/
         checkPermission();
@@ -77,7 +87,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startLocationService();
         }
 
-        /** Get suggestion array from res **/
+        /** Instantiate markers **/
+        arr_latlng = getResources().getStringArray(R.array.latlng);
+        for(int i = 0; i < latlngs.length; i++){
+            latlngs[i] = new LatLng(Double.valueOf(arr_latlng[2*i]),Double.valueOf(arr_latlng[2*i+1]));
+        }
+
+        /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
 
         /** Instantiate ArrayAdapter object with suggestion array **/
@@ -156,38 +172,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        /** Add path-find button and onClickListener **/
-        dijkstra = new Dijkstra();
-        btn_pathfind = findViewById(R.id.btn_pathfind);
-        btn_pathfind.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
-
-                    /** retrieve source and destination marker indeces from database**/
-                    int source = retrieve_index(tv_source.getText().toString());
-                    int dest = retrieve_index(tv_dest.getText().toString());
-                    if(source == -1 || dest == -1) return;
-
-                    /** Clear google map & add markers **/
-                    mMap.clear();
-                    init_markers();
-
-                    /** Get marker indeces of markers on the path **/
-                    ArrayList<Integer> paths = dijkstra.DA(source,dest);
-
-                    /** Draw path from source to destination using dijkstra algorithm **/
-                    for(int i = 0; i < paths.size()-1; i++){
-                        mMap.addPolyline(new PolylineOptions()
-                                .add(new LatLng(Double.valueOf(arr_latlng[paths.get(i)*2]),Double.valueOf(arr_latlng[paths.get(i)*2+1]))
-                                        ,new LatLng(Double.valueOf(arr_latlng[paths.get(i+1)*2]),Double.valueOf(arr_latlng[paths.get(i+1)*2+1])))
-                                .width(20)
-                                .color(0xFF368AFF));
-                    }
-                }
-            }
-        });
-
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
@@ -212,14 +196,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** Set minimum zoom to 15 (동-scale) **/
         mMap.setMinZoomPreference(15);
 
-        /** Instantiate markers **/
-        arr_latlng = getResources().getStringArray(R.array.latlng);
-        l0 = new LatLng(Double.valueOf(arr_latlng[0]), Double.valueOf(arr_latlng[1]));
-        l1 = new LatLng(Double.valueOf(arr_latlng[2]), Double.valueOf(arr_latlng[3]));
-        l2 = new LatLng(Double.valueOf(arr_latlng[4]), Double.valueOf(arr_latlng[5]));
-        l3 = new LatLng(Double.valueOf(arr_latlng[6]), Double.valueOf(arr_latlng[7]));
-        l4 = new LatLng(Double.valueOf(arr_latlng[8]), Double.valueOf(arr_latlng[9]));
-
         /** Add markers **/
         init_markers();
 
@@ -228,13 +204,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-        rlp.setMargins(0,0,0,300);
+        rlp.setMargins(0,0,50,300);
 
         /** Permission check & enable my location **/
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
         }
+
+        /** Add path-find button and onClickListener **/
+        dijkstra = new Dijkstra();
+        btn_pathfind = findViewById(R.id.btn_pathfind);
+        btn_pathfind.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
+                    Log.i(TAG, "button clicked");
+                    /** retrieve source and destination marker indeces from database**/
+                    int source = retrieve_index(tv_source.getText().toString());
+                    int dest = retrieve_index(tv_dest.getText().toString());
+                    Log.i(TAG, "source : " + tv_source.getText().toString() + " index = " + source);
+                    Log.i(TAG, "destination : " + tv_dest.getText().toString() + " index = " + dest);
+                    if(source == -1 || dest == -1) return;
+
+                    /** Clear google map & add markers **/
+                    mMap.clear();
+
+                    /** Get marker indeces of markers on the path **/
+                    ArrayList<Integer> paths = dijkstra.DA(source,dest);
+                    for(int i : paths){
+                        Log.i(TAG, "path:"+i);
+                    }
+
+                    /** Draw path from source to destination using dijkstra algorithm **/
+                    PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
+                    for(int i = 0; i < paths.size()-1; i++){
+                        polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+                    }
+                    mMap.addPolyline(polyLine);
+                }
+            }
+        });
 
     }
 
@@ -297,68 +307,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void init_tables(){
-        if(db != null){
-            String createTable = "CREATE TABLE IF NOT EXISTS LOCATION_INFO (" +
-                    "NAME " + "TEXT," +
-                    "LOCATION_INDEX " + "INTEGER" +")";
-            db.execSQL(createTable);
-        }
-    }
-
-    private void save_rows(){
-        if(db != null){
-            db.execSQL("DELETE FROM LOCATION_INFO");
-
-            String insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "본관" + "'" + "," + 0 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "문과대학" + "'" + "," + 1 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "문대" + "'" + "," + 1 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "서관" + "'" + "," + 1 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "인촌기념관" + "'" + "," + 2 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "인촌" + "'" + "," + 2 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "백주년기념관" + "'" + "," + 3 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "100주년기념관" + "'" + "," + 3 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "백기" + "'" + "," + 3 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "418기념관" + "'" + "," + 4 + ")";
-            db.execSQL(insertRow);
-
-            insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "418" + "'" + "," + 4 + ")";
-            db.execSQL(insertRow);
-
-        }
-    }
-
     private int retrieve_index(String location){
-
         int i = -1;
         if(db != null){
             String retrieve_index = "SELECT LOCATION_INDEX FROM LOCATION_INFO WHERE NAME = " + "'" + location + "'";
@@ -381,11 +330,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /** Initiate Markers **/
     private void init_markers(){
-        mMap.addMarker(new MarkerOptions().position(l0).title("본관").snippet("본관 설명"));
-        mMap.addMarker(new MarkerOptions().position(l1).title("문과대학").snippet("문과대학 설명"));
-        mMap.addMarker(new MarkerOptions().position(l2).title("인촌기념관").snippet("인촌기념관 설명"));
-        mMap.addMarker(new MarkerOptions().position(l3).title("백주년기념관").snippet("백주념기념관 설명"));
-        mMap.addMarker(new MarkerOptions().position(l4).title("418기념관").snippet("418기념관 설명"));
+        for(int i = 0; i < latlngs.length; i++){
+            mMap.addMarker(new MarkerOptions().position(latlngs[i]).visible(false));
+        }
     }
 
 }
+
