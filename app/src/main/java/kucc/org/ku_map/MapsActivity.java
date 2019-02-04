@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -20,11 +21,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +36,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -40,7 +44,7 @@ import java.util.ArrayList;
 
 import kucc.org.ku_map.dijkstra.Dijkstra;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
     /** LOG TAG **/
     private static final String TAG = "MapsActivity";
@@ -54,9 +58,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageButton btn_pathfind;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
+    private ConstraintLayout markerLayout;
 
     private String[] arr_latlng;
     private Dijkstra dijkstra;
+
+    /** Current system time in milliseconds when back button is pressed **/
+    private static long backbtn_pressed_time;
 
     private static LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,
                    l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,
@@ -92,6 +100,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i = 0; i < latlngs.length; i++){
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[2*i]),Double.valueOf(arr_latlng[2*i+1]));
         }
+
+        /** markerLayout set INVISIBLE **/
+        markerLayout = findViewById(R.id.markerLayout);
+        markerLayout.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -183,9 +195,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        /** Reference to a google map object and animate camera to main building of KU**/
+        /** Reference to a google map object and animate camera to main building of KU **/
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.589503, 127.032323),17));
+
+        /** set OnMarkerClickListener & OnMapClickListener **/
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
 
         /** Set zoom controller **/
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -331,9 +347,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /** Initiate Markers **/
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
-            mMap.addMarker(new MarkerOptions().position(latlngs[i]).visible(false));
+            mMap.addMarker(new MarkerOptions().position(latlngs[i]));
         }
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+        markerLayoutSlideUp(null);
+
+        return true;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        markerLayoutSlideDown(null);
+    }
+
+    /** Slide-dpown markerLayout **/
+    public void markerLayoutSlideDown(View v){
+        markerLayout = findViewById(R.id.markerLayout);
+        if(markerLayout.getVisibility() == View.VISIBLE) {
+            markerLayout.setVisibility(View.INVISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(
+                    0, 0, 0, markerLayout.getHeight()
+            );
+            animate.setDuration(500);
+            markerLayout.startAnimation(animate);
+        }
+    }
+
+    /** Slide-up markerLayout **/
+    public void markerLayoutSlideUp(View v){
+        markerLayout = findViewById(R.id.markerLayout);
+        markerLayout.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,0,markerLayout.getHeight(),0
+        );
+        animate.setDuration(500);
+        markerLayout.startAnimation(animate);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        /** Terminate when interval between first and second click of back button is less than2000 milliseconds **/
+        if(backbtn_pressed_time + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+        }else{
+            Toast.makeText(getApplicationContext(), "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            backbtn_pressed_time = System.currentTimeMillis();
+        }
+
+    }
 }
 
