@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,14 +24,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +40,8 @@ import java.util.ArrayList;
 
 import kucc.org.ku_map.dijkstra.Dijkstra;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
 
     /** LOG TAG **/
     private static final String TAG = "MapsActivity";
@@ -56,6 +53,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View mapView;
 
     private ImageButton btn_pathfind;
+    private TextView btn_set_source;
+    private TextView btn_set_dest;
+    private TextView tv_title;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
     private ConstraintLayout markerWindow;
@@ -88,6 +88,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** database **/
         db = openOrCreateDatabase("kumap", MODE_PRIVATE, null);
 
+        /** **/
+        tv_title = findViewById(R.id.tv_title);
+        tv_source = findViewById(R.id.actv_source);
+        tv_dest = findViewById(R.id.actv_dest);
+        btn_pathfind = findViewById(R.id.btn_pathfind);
+        btn_set_source = findViewById(R.id.setSource);
+        btn_set_dest = findViewById(R.id.setDest);
+        markerWindow = findViewById(R.id.markerWindow);
+
         /** Check location permission **/
         checkPermission();
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -102,7 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         /** markerWindow set INVISIBLE **/
-        markerWindow = findViewById(R.id.markerWindow);
         markerWindow.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
@@ -112,10 +120,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_select_dialog_item, suggestions);
 
         /** Set adapter & threshold of auto-complete text view **/
-        tv_source = (AutoCompleteTextView)findViewById(R.id.actv_source);
         tv_source.setThreshold(1);
         tv_source.setAdapter(arrayAdapter);
-        tv_dest = (AutoCompleteTextView)findViewById(R.id.actv_dest);
         tv_dest.setThreshold(1);
         tv_dest.setAdapter(arrayAdapter);
 
@@ -183,7 +189,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
@@ -230,35 +235,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         /** Add path-find button and onClickListener **/
         dijkstra = new Dijkstra();
-        btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_pathfind.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
-                    Log.i(TAG, "button clicked");
-                    /** retrieve source and destination marker indeces from database**/
-                    int source = retrieve_index(tv_source.getText().toString());
-                    int dest = retrieve_index(tv_dest.getText().toString());
-                    Log.i(TAG, "source : " + tv_source.getText().toString() + " index = " + source);
-                    Log.i(TAG, "destination : " + tv_dest.getText().toString() + " index = " + dest);
-                    if(source == -1 || dest == -1) return;
+                findPath();
+            }
+        });
 
-                    /** Clear google map & add markers **/
-                    mMap.clear();
-
-                    /** Get marker indeces of markers on the path **/
-                    ArrayList<Integer> paths = dijkstra.DA(source,dest);
-                    for(int i : paths){
-                        Log.i(TAG, "path:"+i);
-                    }
-
-                    /** Draw path from source to destination using dijkstra algorithm **/
-                    PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
-                    for(int i = 0; i < paths.size()-1; i++){
-                        polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
-                    }
-                    mMap.addPolyline(polyLine);
-                }
+        btn_set_source.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                setSourceFromMarker();
+            }
+        });
+        btn_set_dest.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                setDestFromMarker();
             }
         });
 
@@ -314,14 +307,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /** Convert vector image into bitmap format **/
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
+//    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+//        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+//        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+//        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(bitmap);
+//        vectorDrawable.draw(canvas);
+//        return BitmapDescriptorFactory.fromBitmap(bitmap);
+//    }
 
     private int retrieve_index(String location){
         int i = -1;
@@ -347,26 +340,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /** Initiate Markers **/
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
-            mMap.addMarker(new MarkerOptions().position(latlngs[i]));
+            mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(String.valueOf(i)));
         }
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-        markerLayoutSlideUp(null);
 
+        markerWindow.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,0,markerWindow.getHeight(),0
+        );
+        animate.setDuration(500);
+        markerWindow.startAnimation(animate);
+        tv_title.setText(marker.getTitle());
         return true;
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
-        markerLayoutSlideDown(null);
+        markerWindowSlideDown(null);
+    }
+
+    public void findPath(){
+        if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
+            /** retrieve source and destination marker indeces from database**/
+            int source = retrieve_index(tv_source.getText().toString());
+            int dest = retrieve_index(tv_dest.getText().toString());
+            Log.i(TAG, "source : " + tv_source.getText().toString() + " index = " + source);
+            Log.i(TAG, "destination : " + tv_dest.getText().toString() + " index = " + dest);
+            if(source == -1 || dest == -1) return;
+
+            /** Clear google map & add markers **/
+            mMap.clear();
+
+            /** Get marker indeces of markers on the path **/
+            ArrayList<Integer> paths = dijkstra.DA(source,dest);
+
+            /** Draw path from source to destination using dijkstra algorithm **/
+            PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
+            for(int i = 0; i < paths.size()-1; i++){
+                polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+            }
+            mMap.addPolyline(polyLine);
+        }
     }
 
     /** Slide-down marker window **/
-    public void markerLayoutSlideDown(View v){
-        markerWindow = findViewById(R.id.markerWindow);
+    public void markerWindowSlideDown(View v){
         if(markerWindow.getVisibility() == View.VISIBLE) {
             markerWindow.setVisibility(View.INVISIBLE);
             TranslateAnimation animate = new TranslateAnimation(
@@ -375,17 +397,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             animate.setDuration(500);
             markerWindow.startAnimation(animate);
         }
-    }
-
-    /** Slide-up marker window **/
-    public void markerLayoutSlideUp(View v){
-        markerWindow = findViewById(R.id.markerWindow);
-        markerWindow.setVisibility(View.VISIBLE);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,0,markerWindow.getHeight(),0
-        );
-        animate.setDuration(500);
-        markerWindow.startAnimation(animate);
     }
 
     @Override
@@ -400,5 +411,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+    public void setSourceFromMarker(){
+
+    }
+
+    public void setDestFromMarker(){
+
+    }
+
 }
 
