@@ -142,7 +142,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/markerLayout"
+        android:id="@+id/markerWindow"
         android:layout_width="350dp"
         android:layout_height="115dp"
         android:layout_marginStart="8dp"

@@ -58,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageButton btn_pathfind;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
-    private ConstraintLayout markerLayout;
+    private ConstraintLayout markerWindow;
 
     private String[] arr_latlng;
     private Dijkstra dijkstra;
@@ -101,9 +101,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[2*i]),Double.valueOf(arr_latlng[2*i+1]));
         }
 
-        /** markerLayout set INVISIBLE **/
-        markerLayout = findViewById(R.id.markerLayout);
-        markerLayout.setVisibility(View.INVISIBLE);
+        /** markerWindow set INVISIBLE **/
+        markerWindow = findViewById(R.id.markerWindow);
+        markerWindow.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -364,28 +364,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerLayoutSlideDown(null);
     }
 
-    /** Slide-dpown markerLayout **/
+    /** Slide-down marker window **/
     public void markerLayoutSlideDown(View v){
-        markerLayout = findViewById(R.id.markerLayout);
-        if(markerLayout.getVisibility() == View.VISIBLE) {
-            markerLayout.setVisibility(View.INVISIBLE);
+        markerWindow = findViewById(R.id.markerWindow);
+        if(markerWindow.getVisibility() == View.VISIBLE) {
+            markerWindow.setVisibility(View.INVISIBLE);
             TranslateAnimation animate = new TranslateAnimation(
-                    0, 0, 0, markerLayout.getHeight()
+                    0, 0, 0, markerWindow.getHeight()
             );
             animate.setDuration(500);
-            markerLayout.startAnimation(animate);
+            markerWindow.startAnimation(animate);
         }
     }
 
-    /** Slide-up markerLayout **/
+    /** Slide-up marker window **/
     public void markerLayoutSlideUp(View v){
-        markerLayout = findViewById(R.id.markerLayout);
-        markerLayout.setVisibility(View.VISIBLE);
+        markerWindow = findViewById(R.id.markerWindow);
+        markerWindow.setVisibility(View.VISIBLE);
         TranslateAnimation animate = new TranslateAnimation(
-                0,0,markerLayout.getHeight(),0
+                0,0,markerWindow.getHeight(),0
         );
         animate.setDuration(500);
-        markerLayout.startAnimation(animate);
+        markerWindow.startAnimation(animate);
     }
 
     @Override
