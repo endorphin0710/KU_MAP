@@ -117,6 +117,119 @@
         <item>37.588812</item><item>127.030482</item> <!-- 수당삼양 패컬티하우스(109)-->
     </string-array>
 
+    <string-array name="marker_flag">
+        <item>정경대 후문</item> <!-- 정경대 후문(0) -->
+        <item>정경대</item> <!-- 정경대(1) -->
+        <item>false</item> <!-- (2) -->
+        <item>파이빌리지</item> <!-- 파이빌리지(3) -->
+        <item>미디어관</item> <!-- 미디어관(4) -->
+        <item>시네마트랩</item> <!-- 시네마트랩(5) -->
+        <item>false</item> <!-- (6) -->
+        <item>타이거플라자</item> <!-- 타이거플라자, 정경대(7)-->
+        <item>false</item> <!-- (8) -->
+        <item>국제관</item> <!-- 국제관(9) -->
+        <item>false</item> <!-- (10) -->
+        <item>홍보관</item> <!-- 홍보관(인문사회관)(11) -->
+        <item>false</item> <!-- (12) -->
+        <item>교양관</item> <!-- 교양관(13) -->
+        <item>민주광장</item> <!-- 민주광장(14) -->
+        <item>false</item> <!-- (15) -->
+        <item>false</item> <!-- (16)-->
+        <item>학생회관</item> <!-- 학생회관(17)-->
+        <item>false</item> <!-- (18) -->
+        <item>4.18기념관</item> <!-- 4.18기념관(19) -->
+        <item>농구장</item> <!-- 농구장(20) -->
+        <item>false</item> <!-- (21) -->
+        <item>false</item> <!-- (22) -->
+        <item>정문</item> <!-- 정문(23) -->
+        <item>false</item> <!-- (24) -->
+        <item>중앙광장</item> <!-- 중앙광장(25) -->
+        <item>중엉광장지하 왼쪽입구</item> <!-- 중엉광장지하 왼쪽입구(26) -->
+        <item>중앙광장지하 오른쪽입구</item> <!-- 중앙광장지하 오른쪽입구(27) -->
+        <item>false</item> <!-- (28) -->
+        <item>백주년기념관</item> <!-- 백주년기념관(29) -->
+        <item>박물관</item> <!-- 박물관(30) -->
+        <item>false</item> <!-- (31) -->
+        <item>false</item> <!-- (32) -->
+        <item>고려대역 1번출구</item> <!-- 고려대역 1번출구(33) -->
+        <item>LG-POSCO 경영관</item> <!-- LG-POSCO 경영관(34) -->
+        <item>false</item> <!-- (35) -->
+        <item>false</item> <!-- (36) -->
+        <item>LG-POSCO 경영관</item> <!-- LG-POSCO 경영관(37) -->
+        <item>현대자동차 경영관</item> <!-- 현대자동차 경영관(38) -->
+        <item>false</item> <!-- (39) -->
+        <item>경영대학 잔디밭</item> <!-- 경영대학 잔디밭(40) -->
+        <item>경영대학 본관</item> <!-- 경영대학 본관(41) -->
+        <item>false</item> <!-- (42) -->
+        <item>false</item> <!-- (43) -->
+        <item>false</item> <!-- (44) -->
+        <item>false</item> <!-- (45) -->
+        <item>호상</item> <!-- 호상(46) -->
+        <item>중앙광장지하 2번 게이트</item> <!-- 중앙광장지하 2번 게이트(47) -->
+        <item>false</item> <!-- (48) -->
+        <item>false</item> <!-- (49) -->
+        <item>false</item> <!-- (50) -->
+        <item>false</item> <!-- (51) -->
+        <item>중앙도서관</item> <!-- 중앙도서관(52)-->
+        <item>사범대학 본관</item> <!-- 사범대학 본관(53) -->
+        <item>false</item> <!-- (54) -->
+        <item>사범대학 신관</item> <!-- 사범대학 신관(55) -->
+        <item>false</item> <!-- (56) -->
+        <item>운초우선교육관</item> <!-- 운초우선교육관(57) -->
+        <item>false</item> <!-- (58) -->
+        <item>false</item> <!-- (59) -->
+        <item>false</item> <!-- (60) -->
+        <item>법학관 구관</item> <!-- 법학관 구관(61) -->
+        <item>아세아문제연구소</item> <!-- 아세아문제연구소(62) -->
+        <item>false</item> <!-- (63) -->
+        <item>false</item> <!-- (64) -->
+        <item>false</item> <!-- (65) -->
+        <item>대학원</item> <!-- 대학원(66) -->
+        <item>false</item> <!-- (67) -->
+        <item>false</item> <!-- (68) -->
+        <item>동원글로벌리더십홀</item> <!-- 동원글로벌리더십홀(69) -->
+        <item>false</item> <!-- (70) -->
+        <item>false</item> <!-- (71) -->
+        <item>CJ법학관</item> <!-- CJ법학관(72) -->
+        <item>법대 후문</item> <!-- 법대 후문(73) -->
+        <item>false</item> <!-- (74)-->
+        <item>false</item> <!-- (75) -->
+        <item>해송법학도서관</item> <!-- 해송법학도서관(76) -->
+        <item>법학관 신관</item> <!-- 법학관 신관(77) -->
+        <item>false</item> <!-- (78) -->
+        <item>다람쥐길</item> <!-- 다람쥐길(79) -->
+        <item>다람쥐길 옆 물탱크</item> <!-- 다람쥐길 옆 물탱크(80) -->
+        <item>false</item> <!-- (81) -->
+        <item>false</item> <!--(82) -->
+        <item>인촌기념관</item> <!-- 인촌기념관(83) -->
+        <item>false</item> <!-- (84) -->
+        <item>조지훈 시비</item> <!-- 조지훈 시비(85)-->
+        <item>false</item> <!-- (86) -->
+        <item>false</item> <!-- (87) -->
+        <item>false</item> <!-- (88) -->
+        <item>false</item> <!-- (89) -->
+        <item>false</item> <!-- (90) -->
+        <item>false</item> <!-- (91) -->
+        <item>false</item> <!-- (92) -->
+        <item>false</item> <!-- (93) -->
+        <item>문과대학</item> <!-- 문과대학(94) -->
+        <item>false</item> <!-- (95) -->
+        <item>false</item> <!-- (96) -->
+        <item>false</item> <!-- (97) -->
+        <item>false</item> <!-- (98) -->
+        <item>false</item> <!-- (99) -->
+        <item>false</item> <!-- (100) -->
+        <item>false</item> <!-- (101) -->
+        <item>false</item> <!-- (102) -->
+        <item>본관</item> <!-- 본관(103) -->
+        <item>false</item> <!-- (104) -->
+        <item>인촌김성수 동상</item> <!-- 인촌김성수 동상(105) -->
+        <item>false</item> <!-- (106) -->
+        <item>중앙광장지하 1번 게이트</item> <!-- 중앙광장지하 1번 게이트(107)-->
+        <item>false</item> <!-- (108)-->
+        <item>수당삼양 패컬티하우스</item> <!-- 수당삼양 패컬티하우스(109)-->
+    </string-array>
+
     <string-array name="suggestion">
         <!-- index:0 --> <item>정경대 후문</item><item>정후</item>
         <!-- index:1 --> <item>정경대학</item><item>정경대</item><item>정대</item>

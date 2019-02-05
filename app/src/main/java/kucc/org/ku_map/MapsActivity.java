@@ -54,7 +54,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View mapView;
 
     private ImageButton btn_pathfind;
-    private ImageButton btn_switch;
     private Button btn_set_source;
     private Button btn_set_dest;
     private TextView tv_title;
@@ -63,6 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ConstraintLayout markerWindow;
 
     private String[] arr_latlng;
+    private String[] arr_flag;
     private Dijkstra dijkstra;
 
     /** Current system time in milliseconds when back button is pressed **/
@@ -111,6 +111,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i = 0; i < latlngs.length; i++){
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[2*i]),Double.valueOf(arr_latlng[2*i+1]));
         }
+
+        /** Instantiate marker_flag array **/
+        arr_flag = getResources().getStringArray(R.array.marker_flag);
 
         /** markerWindow set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
@@ -342,7 +345,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /** Initiate Markers **/
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
-            mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(String.valueOf(i)));
+            if(!arr_flag[i].equals("false")) {
+                mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(String.valueOf(i)).title(arr_flag[i]));
+            }
         }
     }
 
@@ -423,11 +428,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void setSourceFromMarker(){
-
+        tv_source.setText(tv_title.getText());
     }
 
     public void setDestFromMarker(){
-
+        tv_dest.setText(tv_title.getText());
     }
 
 }
