@@ -139,6 +139,23 @@
             app:layout_constraintHorizontal_bias="0.272"
             app:layout_constraintStart_toEndOf="@+id/actv_dest" />
 
+        <ImageButton
+            android:id="@+id/btn_switch"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="56dp"
+            android:background="@drawable/rounded_edittext"
+            android:src="@drawable/swtich"
+            android:onClick="source_dest_switch"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/actv_dest" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -162,7 +179,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <Button
             android:id="@+id/setSource"
             android:layout_width="300dp"
             android:layout_height="38dp"
@@ -171,7 +188,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_edittext"
+            android:background="@drawable/rounded_button"
             android:text="출발지로 설정"
             android:textAlignment="center"
             android:textSize="20dp"
@@ -179,7 +196,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <Button
             android:id="@+id/setDest"
             android:layout_width="300dp"
             android:layout_height="38dp"
@@ -188,7 +205,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_edittext"
+            android:background="@drawable/rounded_button"
             android:text="도착지로 설정"
             android:textAlignment="center"
             android:textSize="20dp"

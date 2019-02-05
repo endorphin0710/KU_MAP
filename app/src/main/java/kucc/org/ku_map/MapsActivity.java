@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -53,8 +54,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View mapView;
 
     private ImageButton btn_pathfind;
-    private TextView btn_set_source;
-    private TextView btn_set_dest;
+    private ImageButton btn_switch;
+    private Button btn_set_source;
+    private Button btn_set_dest;
     private TextView tv_title;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
@@ -397,6 +399,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             animate.setDuration(500);
             markerWindow.startAnimation(animate);
         }
+    }
+
+    /** switch source and destination **/
+    public void source_dest_switch(View v){
+        Editable source = tv_source.getText();
+        Editable dest = tv_dest.getText();
+        tv_source.setText(dest);
+        tv_dest.setText(source);
     }
 
     @Override
