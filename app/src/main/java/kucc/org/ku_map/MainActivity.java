@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     /** DB **/
     private SQLiteDatabase db;
+    ArrayList<Node> nodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -38,8 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-
-import kucc.org.ku_map.dijkstra.Dijkstra;
+import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
@@ -52,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private View mapView;
+    private A_STAR astar;
 
     private ImageButton btn_pathfind;
     private Button btn_set_source;
@@ -63,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String[] arr_latlng;
     private String[] arr_flag;
-    private Dijkstra dijkstra;
+    private ArrayList<Node> nodes;
 
     /** Current system time in milliseconds when back button is pressed **/
     private static long backbtn_pressed_time;
@@ -98,6 +98,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
         markerWindow = findViewById(R.id.markerWindow);
+
+        astar = new A_STAR();
+        /** Graph initialization **/
+        nodes = new ArrayList<>();
+        Random r = new Random();
+        //nodes
+        for(int i = 0; i < 110; i++){
+            nodes.add(new Node(i, "null", r.nextInt(100)));
+        }
+        //edges
+        for(int i = 0; i < nodes.size(); i++){
+
+            Node n = nodes.get(i);
+            int random = r.nextInt(10);
+            Edge[] edges = new Edge[random];
+            for(int k = 0; k < random; k++){
+                int targetIndex = r.nextInt(110);
+                edges[k] = new Edge(nodes.get(targetIndex),r.nextDouble()*50);
+            }
+            n.adjacencies = edges;
+        }
 
         /** Check location permission **/
         checkPermission();
@@ -199,7 +220,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapView = mapFragment.getView();
 
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
@@ -239,7 +259,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         /** Add path-find button and onClickListener **/
-        dijkstra = new Dijkstra();
         btn_pathfind.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -250,13 +269,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_set_source.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setSourceFromMarker();
+                tv_source.setText(tv_title.getText());
             }
         });
         btn_set_dest.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setDestFromMarker();
+                tv_dest.setText(tv_title.getText());
             }
         });
 
@@ -381,9 +400,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             /** Clear google map & add markers **/
             mMap.clear();
+            init_markers();
 
             /** Get marker indeces of markers on the path **/
-            ArrayList<Integer> paths = dijkstra.DA(source,dest);
+            astar.search(nodes.get(source), nodes.get(dest));
+            ArrayList<Integer> paths = (ArrayList)astar.printPath(nodes.get(dest));
 
             /** Draw path from source to destination using dijkstra algorithm **/
             PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
@@ -425,14 +446,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             backbtn_pressed_time = System.currentTimeMillis();
         }
 
-    }
-
-    public void setSourceFromMarker(){
-        tv_source.setText(tv_title.getText());
-    }
-
-    public void setDestFromMarker(){
-        tv_dest.setText(tv_title.getText());
     }
 
 }
