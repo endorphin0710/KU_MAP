@@ -31,7 +31,7 @@
         <item>37.588145</item><item>127.034264</item> <!-- 정문(23) -->
         <item>37.588596</item><item>127.034270</item> <!-- (24) -->
         <item>37.588602</item><item>127.033573</item> <!-- 중앙광장(25) -->
-        <item>37.588151</item><item>127.033401</item> <!-- 중엉광장지하 왼쪽입구(26) -->
+        <item>37.588151</item><item>127.033401</item> <!-- 중앙광장지하 왼쪽입구(26) -->
         <item>37.588812</item><item>127.034125</item> <!-- 중앙광장지하 오른쪽입구(27) -->
         <item>37.588914</item><item>127.034578</item> <!-- (28) -->
         <item>37.589165</item><item>127.034248</item> <!-- 백주년기념관(29) -->
@@ -144,7 +144,7 @@
         <item>정문</item> <!-- 정문(23) -->
         <item>false</item> <!-- (24) -->
         <item>중앙광장</item> <!-- 중앙광장(25) -->
-        <item>중엉광장지하 왼쪽입구</item> <!-- 중엉광장지하 왼쪽입구(26) -->
+        <item>중앙광장지하 왼쪽입구</item> <!-- 중앙광장지하 왼쪽입구(26) -->
         <item>중앙광장지하 오른쪽입구</item> <!-- 중앙광장지하 오른쪽입구(27) -->
         <item>false</item> <!-- (28) -->
         <item>백주년기념관</item> <!-- 백주년기념관(29) -->
@@ -152,10 +152,10 @@
         <item>false</item> <!-- (31) -->
         <item>false</item> <!-- (32) -->
         <item>고려대역 1번출구</item> <!-- 고려대역 1번출구(33) -->
-        <item>LG-POSCO 경영관</item> <!-- LG-POSCO 경영관(34) -->
+        <item>LG-POSCO 경영관(옆)</item> <!-- LG-POSCO 경영관(34) -->
         <item>false</item> <!-- (35) -->
         <item>false</item> <!-- (36) -->
-        <item>LG-POSCO 경영관</item> <!-- LG-POSCO 경영관(37) -->
+        <item>LG-POSCO 경영관(정문)</item> <!-- LG-POSCO 경영관(37) -->
         <item>현대자동차 경영관</item> <!-- 현대자동차 경영관(38) -->
         <item>false</item> <!-- (39) -->
         <item>경영대학 잔디밭</item> <!-- 경영대학 잔디밭(40) -->
@@ -246,8 +246,8 @@
         <!-- index:20 --> <item>농구장</item><item>닭장</item>
         <!-- index:23 --> <item>정문</item>
         <!-- index:25 --> <item>중앙광장</item><item>중광</item>
-        <!-- index:26 --> <item>중엉광장지하 왼쪽입구</item><item>중지 왼쪽입구</item>
-        <!-- index:27 --> <item>중엉광장지하 오른쪽입구</item><item>중지 오른쪽입구</item>
+        <!-- index:26 --> <item>중앙광장지하 왼쪽입구</item><item>중지 왼쪽입구</item>
+        <!-- index:27 --> <item>중앙광장지하 오른쪽입구</item><item>중지 오른쪽입구</item>
         <!-- index:29 --> <item>백주년기념 삼성관</item><item>백주년기념관</item><item>100주년기념관</item><item>백기</item>
         <!-- index:30 --> <item>박물관</item>
         <!-- index:33 --> <item>고려대역 1번출구</item><item>고대역 1번출구</item>

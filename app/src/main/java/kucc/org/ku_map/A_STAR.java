@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class A_STAR {
 
-    public static List<Integer> printPath(Node target) {
-        List<Integer> path = new ArrayList<Integer>();
+    public List<Integer> printPath(Node target) {
+        List<Integer> path = new ArrayList<>();
 
         for (Node node = target; node != null; node = node.parent) {
             path.add(node.index);
@@ -22,7 +22,7 @@ public class A_STAR {
         return path;
     }
 
-    public static void search(Node source, Node dest) {
+    public void search(Node source, Node dest) {
 
         Set<Node> explored = new HashSet<Node>();
 

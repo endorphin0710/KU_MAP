@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL("DELETE FROM LOCATION_INFO");
 
             String insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정경대후문" + "'" + "," + 0 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정경대 후문" + "'" + "," + 0 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정후" + "'" + "," + 0 + ")";
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "418기념관" + "'" + "," + 19 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "4.18기념관" + "'" + "," + 19 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "사일팔기념관" + "'" + "," + 19 + ")";
@@ -192,14 +191,14 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG_POSCO 경영관(옆)" + "'" + "," + 34 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG-POSCO 경영관(옆)" + "'" + "," + 34 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "엘포(옆)" + "'" + "," + 34 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG_POSCO 경영관(정문)" + "'" + "," + 37 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG-POSCO 경영관(정문)" + "'" + "," + 37 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "엘포(정문)" + "'" + "," + 37 + ")";
@@ -247,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "운초우선 교육관" + "'" + "," + 57 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "운초우선교육관" + "'" + "," + 57 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "교육관" + "'" + "," + 57 + ")";
