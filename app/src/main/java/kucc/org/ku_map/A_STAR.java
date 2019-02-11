@@ -10,11 +10,16 @@ import java.util.Set;
 
 public class A_STAR {
 
-    public List<Integer> printPath(Node target) {
-        List<Integer> path = new ArrayList<>();
+    private List<Integer> path;
 
-        for (Node node = target; node != null; node = node.parent) {
+    public List<Integer> printPath(Node target) {
+
+        path = new ArrayList<>();
+
+        Node node = target;
+        while(node != null){
             path.add(node.index);
+            node = node.parent;
         }
 
         Collections.reverse(path);
@@ -22,11 +27,13 @@ public class A_STAR {
         return path;
     }
 
-    public void search(Node source, Node dest) {
+    public void search(Node source, Node destination) {
 
-        Set<Node> explored = new HashSet<Node>();
+        /** Closed list for A* algorithm **/
+        Set<Node> closedList = new HashSet<Node>();
 
-        PriorityQueue<Node> pq = new PriorityQueue<Node>(20, new Comparator<Node>() {
+        /** Open list which is implemented as priority queue (in ascending order) **/
+        PriorityQueue<Node> openList = new PriorityQueue<Node>(20, new Comparator<Node>() {
             public int compare(Node i, Node j) {
                 if (i.f_scores > j.f_scores) {
                     return 1;
@@ -38,55 +45,46 @@ public class A_STAR {
                     return 0;
                 }
             }
-
         });
 
         source.g_scores = 0;
-        pq.add(source);
+        source.f_scores = source.g_scores + source.h_scores;
+        openList.add(source);
 
+        /** destination not found yet **/
         boolean found = false;
 
-        while ((!pq.isEmpty()) && (!found)) {
+        while (!found) {
 
-            // the node in having the lowest f_score value
-            Node current = pq.poll();
+            /** remove a node with minimum f, which is g+h, in the open list and add it to the closed list **/
+            Node current_node = openList.poll();
+            closedList.add(current_node);
 
-            explored.add(current);
+            /** add adjacencies of current node to the open list if it is not in the closed list**/
+            for(Edge e : current_node.adjacencies){
 
-            // goal found
-            if (current.index == dest.index) {
-                found = true;
-            }
-
-            // check every child of current node
-            for (Edge e : current.adjacencies) {
                 Node child = e.target;
                 double cost = e.cost;
-                double temp_g_scores = current.g_scores + cost;
-                double temp_f_scores = temp_g_scores + child.h_scores;
+                double temp_g_score = current_node.g_scores + cost;
+                double temp_f_score = temp_g_score + child.h_scores;
 
-                /*
-                 * if child node has been evaluated and the newer f_score is higher, skip
+                /** Add child node to the open list if closed list does not contain child node
+                 *  OR replace information if current f is lower than original f value
                  */
-                if ((explored.contains(child)) && (temp_f_scores >= child.f_scores)) {
-                    continue;
-                }
+                if(!closedList.contains(child) || temp_f_score < child.f_scores){
 
-                /*
-                 * else if child node is not in queue or newer f_score is lower
-                 */
-                else if ((!pq.contains(child)) || (temp_f_scores < child.f_scores)) {
+                    child.parent = current_node;
+                    child.g_scores = temp_g_score;
+                    child.f_scores = temp_f_score;
 
-                    child.parent = current;
-                    child.g_scores = temp_g_scores;
-                    child.f_scores = temp_f_scores;
-
-                    if (pq.contains(child)) {
-                        pq.remove(child);
+                    if(openList.contains(child)) {
+                        openList.remove(child);
                     }
+                    openList.add(child);
 
-                    pq.add(child);
-
+                    if(child == destination){
+                        found = true;
+                    }
                 }
             }
         }
@@ -98,7 +96,7 @@ class Node {
     public final int index;
     public final String value;
     public double g_scores;
-    public final double h_scores;
+    public double h_scores;
     public double f_scores = 0;
     public Edge[] adjacencies;
     public Node parent;
@@ -107,6 +105,7 @@ class Node {
         this.index = index;
         this.value = val;
         this.h_scores = hVal;
+        this.parent = null;
     }
 
 }

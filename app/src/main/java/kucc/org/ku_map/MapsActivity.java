@@ -67,25 +67,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ConstraintLayout markerWindow;
 
     private String[] arr_latlng;
-    private String[] arr_flag;
     private ArrayList<Node> nodes;
-
-    /** Current system time in milliseconds when back button is pressed **/
+    private ArrayList<Integer> paths;
     private long backbtn_pressed_time;
 
-    private LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,
-                   l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,
-                   l40,l41,l42,l43,l44,l45,l46,l47,l48,l49,l50,l51,l52,l53,l54,l55,l56,l57,l58,l59,
-                   l60,l61,l62,l63,l64,l65,l66,l67,l68,l69,l70,l71,l72,l73,l74,l75,l76,l77,l78,l79,
-                   l80,l81,l82,l83,l84,l85,l86,l87,l88,l89,l90,l91,l92,l93,l94,l95,l96,l97,l98,l99,
-                   l100,l101,l102,l103,l104,l105,l106,l107,l108,l109;
+    private LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11;
     private LatLng[] latlngs = {
-            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,
-            l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,
-            l40,l41,l42,l43,l44,l45,l46,l47,l48,l49,l50,l51,l52,l53,l54,l55,l56,l57,l58,l59,
-            l60,l61,l62,l63,l64,l65,l66,l67,l68,l69,l70,l71,l72,l73,l74,l75,l76,l77,l78,l79,
-            l80,l81,l82,l83,l84,l85,l86,l87,l88,l89,l90,l91,l92,l93,l94,l95,l96,l97,l98,l99,
-            l100,l101,l102,l103,l104,l105,l106,l107,l108,l109};
+            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,26 +92,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_set_dest = findViewById(R.id.setDest);
         markerWindow = findViewById(R.id.markerWindow);
 
+        /** Instantiate markers **/
+        arr_latlng = getResources().getStringArray(R.array.latlng);
+        for(int i = 0; i < latlngs.length; i++){
+            latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
+        }
+
         /** Graph initialization **/
         astar = new A_STAR();
         nodes = new ArrayList<>();
         Random r = new Random();
         //nodes
-        for(int i = 0; i < 110; i++){
-            nodes.add(new Node(i, "null", r.nextInt(100)));
+        for(int i = 0; i < 12; i++){
+            nodes.add(new Node(i, arr_latlng[3*i+2], i));
         }
         //edges
-        for(int i = 0; i < nodes.size(); i++){
-
-            Node n = nodes.get(i);
-            int random = r.nextInt(10)+1;
-            Edge[] edges = new Edge[random];
-            for(int k = 0; k < random; k++){
-                int targetIndex = r.nextInt(110);
-                edges[k] = new Edge(nodes.get(targetIndex),r.nextDouble()*50);
-            }
-            n.adjacencies = edges;
-        }
+        nodes.get(0).adjacencies = new Edge[]{new Edge(nodes.get(11),3)};
+        nodes.get(1).adjacencies = new Edge[]{new Edge(nodes.get(9),2)};
+        nodes.get(2).adjacencies = new Edge[]{new Edge(nodes.get(3),1),new Edge(nodes.get(10),5)};
+        nodes.get(3).adjacencies = new Edge[]{new Edge(nodes.get(2), 1)};
+        nodes.get(4).adjacencies = new Edge[]{new Edge(nodes.get(6),4)};
+        nodes.get(5).adjacencies = new Edge[]{new Edge(nodes.get(6),2),new Edge(nodes.get(7),1)};
+        nodes.get(6).adjacencies = new Edge[]{new Edge(nodes.get(4),4),new Edge(nodes.get(5),2),new Edge(nodes.get(8),3)};
+        nodes.get(7).adjacencies = new Edge[]{new Edge(nodes.get(5),1),new Edge(nodes.get(10),4)};
+        nodes.get(8).adjacencies = new Edge[]{new Edge(nodes.get(6),3)};
+        nodes.get(9).adjacencies = new Edge[]{new Edge(nodes.get(1),2),new Edge(nodes.get(10),3),new Edge(nodes.get(11),1)};
+        nodes.get(10).adjacencies = new Edge[]{new Edge(nodes.get(2),5),new Edge(nodes.get(7),4),new Edge(nodes.get(9),3)};
+        nodes.get(11).adjacencies = new Edge[]{new Edge(nodes.get(0),3),new Edge(nodes.get(9),1)};
 
         /** Check location permission **/
         checkPermission();
@@ -131,15 +126,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             startLocationService();
         }
-
-        /** Instantiate markers **/
-        arr_latlng = getResources().getStringArray(R.array.latlng);
-        for(int i = 0; i < latlngs.length; i++){
-            latlngs[i] = new LatLng(Double.valueOf(arr_latlng[2*i]),Double.valueOf(arr_latlng[2*i+1]));
-        }
-
-        /** Instantiate marker_flag array **/
-        arr_flag = getResources().getStringArray(R.array.marker_flag);
 
         /** markerWindow set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
@@ -369,9 +355,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /** Initiate Markers **/
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
-            if(!arr_flag[i].equals("false")) {
-                mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.tiger)).title(arr_flag[i]));
-            }
+            mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.tiger)).title(nodes.get(i).value));
         }
     }
 
@@ -395,6 +379,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void findPath(){
+
         if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
             /** retrieve source and destination marker indeces from database**/
             int source = retrieve_index(tv_source.getText().toString());
@@ -408,8 +393,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             init_markers();
 
             /** Get marker indeces of markers on the path **/
+            for(Node n : nodes){
+                n.parent = null;
+            }
             astar.search(nodes.get(source), nodes.get(dest));
-            ArrayList<Integer> paths = (ArrayList)astar.printPath(nodes.get(dest));
+            paths = (ArrayList)astar.printPath(nodes.get(dest));
 
             /** Draw path from source to destination using dijkstra algorithm **/
             PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
@@ -452,6 +440,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
-
 }
-
