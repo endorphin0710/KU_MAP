@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="swtich" />
-                            <entry key="sourceFile" value="$USER_HOME$/Desktop/swtich.svg" />
+                            <entry key="outputName" value="left_arrow" />
+                            <entry key="sourceFile" value="$USER_HOME$/Desktop/left_arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

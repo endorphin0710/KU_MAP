@@ -59,12 +59,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private A_STAR astar;
 
     private ImageButton btn_pathfind;
+    private ImageButton btn_menu;
     private Button btn_set_source;
     private Button btn_set_dest;
     private TextView tv_title;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
     private ConstraintLayout markerWindow;
+    private ConstraintLayout menuLayout;
 
     private String[] arr_latlng;
     private ArrayList<Node> nodes;
@@ -80,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        /** database **/
+        /** Database **/
         db = openOrCreateDatabase("kumap", MODE_PRIVATE, null);
 
         /** instance initialization **/
@@ -90,7 +92,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
+        btn_menu = findViewById(R.id.btn_menu);
         markerWindow = findViewById(R.id.markerWindow);
+        menuLayout = findViewById(R.id.menuLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
         Random r = new Random();
@@ -129,8 +133,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startLocationService();
         }
 
-        /** markerWindow set INVISIBLE **/
+        /** MarkerWindow & menu layout set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
+        menuLayout.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -208,6 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
@@ -222,7 +228,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.589503, 127.032323),17));
 
-        /** set OnMarkerClickListener & OnMapClickListener **/
+        /** Set OnMarkerClickListener & OnMapClickListener **/
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
 
@@ -268,6 +274,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 tv_dest.setText(tv_title.getText());
+            }
+        });
+
+        btn_menu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                menuLayout.setVisibility(View.VISIBLE);
+                TranslateAnimation animate = new TranslateAnimation(
+                        -menuLayout.getWidth(),0,0,0
+                );
+                animate.setDuration(300);
+                menuLayout.startAnimation(animate);
+                btn_menu.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -368,7 +387,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         TranslateAnimation animate = new TranslateAnimation(
                 0,0,markerWindow.getHeight(),0
         );
-        animate.setDuration(500);
+        animate.setDuration(300);
         markerWindow.startAnimation(animate);
         tv_title.setText(marker.getTitle());
         return true;
@@ -377,27 +396,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         markerWindowSlideDown(null);
+        menu_exit(null);
     }
 
     public void findPath(){
 
         if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
-            /** retrieve source and destination marker indeces from database**/
+            /** Retrieve source and destination marker indeces from database**/
             int source = retrieve_index(tv_source.getText().toString());
             int dest = retrieve_index(tv_dest.getText().toString());
             Log.i(TAG, "source : " + tv_source.getText().toString() + " index = " + source);
             Log.i(TAG, "destination : " + tv_dest.getText().toString() + " index = " + dest);
             if(source == -1 || dest == -1) return;
+            if(source == dest) return;
 
             /** Clear google map & add markers **/
             mMap.clear();
             init_markers();
 
-            /** Get marker indeces of markers on the path **/
+            /** Clear parent information & add heuristic values(distacne from source in meters) **/
             for(Node n : nodes){
                 n.parent = null;
                 n.h_scores = cal_distance(nodes.get(source).latitude, nodes.get(source).longitude, n.latitude, n.longitude);
-                Log.i(TAG, "distance : " + n.h_scores);
             }
             astar.search(nodes.get(source), nodes.get(dest));
             paths = (ArrayList)astar.printPath(nodes.get(dest));
@@ -418,12 +438,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             TranslateAnimation animate = new TranslateAnimation(
                     0, 0, 0, markerWindow.getHeight()
             );
-            animate.setDuration(500);
+            animate.setDuration(300);
             markerWindow.startAnimation(animate);
         }
     }
 
-    /** switch source and destination **/
+    /** Fold menu **/
+    public void menu_exit(View v){
+        if(menuLayout.getVisibility() == View.VISIBLE) {
+            menuLayout.setVisibility(View.INVISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(
+                    0, -menuLayout.getWidth(), 0, 0
+            );
+            animate.setDuration(300);
+            menuLayout.startAnimation(animate);
+            btn_menu.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /** Switch source and destination **/
     public void source_dest_switch(View v){
         Editable source = tv_source.getText();
         Editable dest = tv_dest.getText();
@@ -431,6 +464,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_dest.setText(source);
     }
 
+    /** On BackButton Pressed **/
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
@@ -444,7 +478,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    /** calculate distacne between two points **/
+    /** Calculate distacne between two points **/
     public double cal_distance(double lat1, double lon1, double lat2, double lon2) {
         if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
