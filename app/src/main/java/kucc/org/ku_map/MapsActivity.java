@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** database **/
         db = openOrCreateDatabase("kumap", MODE_PRIVATE, null);
 
-        /** **/
+        /** instance initialization **/
         tv_title = findViewById(R.id.tv_title);
         tv_source = findViewById(R.id.actv_source);
         tv_dest = findViewById(R.id.actv_dest);
@@ -91,6 +91,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
         markerWindow = findViewById(R.id.markerWindow);
+        astar = new A_STAR();
+        nodes = new ArrayList<>();
+        Random r = new Random();
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
@@ -98,15 +101,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
         }
 
-        /** Graph initialization **/
-        astar = new A_STAR();
-        nodes = new ArrayList<>();
-        Random r = new Random();
-        //nodes
+        /** Nodes initialization **/
         for(int i = 0; i < 12; i++){
-            nodes.add(new Node(i, arr_latlng[3*i+2], i));
+            nodes.add(new Node(i, arr_latlng[3*i+2], 0));
+            nodes.get(i).latitude = Double.valueOf(arr_latlng[3*i]);
+            nodes.get(i).longitude = Double.valueOf(arr_latlng[3*i+1]);
         }
-        //edges
+
+        /** Edges initialization **/
         nodes.get(0).adjacencies = new Edge[]{new Edge(nodes.get(11),3)};
         nodes.get(1).adjacencies = new Edge[]{new Edge(nodes.get(9),2)};
         nodes.get(2).adjacencies = new Edge[]{new Edge(nodes.get(3),1),new Edge(nodes.get(10),5)};
@@ -248,7 +250,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             mMap.setMyLocationEnabled(true);
         }
-
         /** Add path-find button and onClickListener **/
         btn_pathfind.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -395,6 +396,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             /** Get marker indeces of markers on the path **/
             for(Node n : nodes){
                 n.parent = null;
+                n.h_scores = cal_distance(nodes.get(source).latitude, nodes.get(source).longitude, n.latitude, n.longitude);
+                Log.i(TAG, "distance : " + n.h_scores);
             }
             astar.search(nodes.get(source), nodes.get(dest));
             paths = (ArrayList)astar.printPath(nodes.get(dest));
@@ -439,5 +442,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             backbtn_pressed_time = System.currentTimeMillis();
         }
 
+    }
+
+    /** calculate distacne between two points **/
+    public double cal_distance(double lat1, double lon1, double lat2, double lon2) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515;
+
+            /** meter = mile * 1609.34 **/
+            return (dist*1609.34);
+        }
     }
 }

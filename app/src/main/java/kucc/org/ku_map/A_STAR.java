@@ -100,6 +100,8 @@ class Node {
     public double f_scores = 0;
     public Edge[] adjacencies;
     public Node parent;
+    public double latitude;
+    public double longitude;
 
     public Node(int index, String val, double hVal) {
         this.index = index;
