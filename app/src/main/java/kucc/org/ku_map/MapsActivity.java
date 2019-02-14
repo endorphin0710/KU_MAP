@@ -43,7 +43,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
@@ -73,9 +72,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Integer> paths;
     private long backbtn_pressed_time;
 
-    private LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11;
+    private LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12;
     private LatLng[] latlngs = {
-            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11};
+            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         menuLayout = findViewById(R.id.menuLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
-        Random r = new Random();
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
@@ -106,16 +104,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         /** Nodes initialization **/
-        for(int i = 0; i < 12; i++){
-            nodes.add(new Node(i, arr_latlng[3*i+2], 0));
+        for(int i = 0; i < latlngs.length; i++){
+            nodes.add(new Node(i, arr_latlng[3*i+2]));
             nodes.get(i).latitude = Double.valueOf(arr_latlng[3*i]);
             nodes.get(i).longitude = Double.valueOf(arr_latlng[3*i+1]);
         }
 
         /** Edges initialization **/
         nodes.get(0).adjacencies = new Edge[]{new Edge(nodes.get(11),3)};
-        nodes.get(1).adjacencies = new Edge[]{new Edge(nodes.get(9),2)};
-        nodes.get(2).adjacencies = new Edge[]{new Edge(nodes.get(3),1),new Edge(nodes.get(10),5)};
+        nodes.get(1).adjacencies = new Edge[]{new Edge(nodes.get(9),2),new Edge(nodes.get(12),1)};
+        nodes.get(2).adjacencies = new Edge[]{new Edge(nodes.get(3),1),new Edge(nodes.get(10),5),new Edge(nodes.get(12),1)};
         nodes.get(3).adjacencies = new Edge[]{new Edge(nodes.get(2), 1)};
         nodes.get(4).adjacencies = new Edge[]{new Edge(nodes.get(6),4)};
         nodes.get(5).adjacencies = new Edge[]{new Edge(nodes.get(6),2),new Edge(nodes.get(7),1)};
@@ -125,6 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         nodes.get(9).adjacencies = new Edge[]{new Edge(nodes.get(1),2),new Edge(nodes.get(10),3),new Edge(nodes.get(11),1)};
         nodes.get(10).adjacencies = new Edge[]{new Edge(nodes.get(2),5),new Edge(nodes.get(7),4),new Edge(nodes.get(9),3)};
         nodes.get(11).adjacencies = new Edge[]{new Edge(nodes.get(0),3),new Edge(nodes.get(9),1)};
+        nodes.get(12).adjacencies = new Edge[]{new Edge(nodes.get(1),1),new Edge(nodes.get(2),1)};
 
         /** Check location permission **/
         checkPermission();
@@ -375,7 +374,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /** Initiate Markers **/
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
-            mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.tiger)).title(nodes.get(i).value));
+            if(!nodes.get(i).value.equals("waypoint")) {
+                mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.tiger)).title(nodes.get(i).value));
+            }else{
+                mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(nodes.get(i).value).visible(false));
+            }
         }
     }
 
@@ -417,10 +420,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             /** Clear parent information & add heuristic values(distacne from source in meters) **/
             for(Node n : nodes){
                 n.parent = null;
-                n.h_scores = cal_distance(nodes.get(source).latitude, nodes.get(source).longitude, n.latitude, n.longitude);
+                n.h_scores = cal_distance(nodes.get(dest).latitude, nodes.get(dest).longitude, n.latitude, n.longitude);
             }
             astar.search(nodes.get(source), nodes.get(dest));
             paths = (ArrayList)astar.printPath(nodes.get(dest));
+            Log.i(TAG, "paths : " + paths);
 
             /** Draw path from source to destination using dijkstra algorithm **/
             PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);

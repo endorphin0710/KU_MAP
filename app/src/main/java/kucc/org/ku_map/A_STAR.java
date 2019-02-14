@@ -103,10 +103,9 @@ class Node {
     public double latitude;
     public double longitude;
 
-    public Node(int index, String val, double hVal) {
+    public Node(int index, String val) {
         this.index = index;
         this.value = val;
-        this.h_scores = hVal;
         this.parent = null;
     }
 

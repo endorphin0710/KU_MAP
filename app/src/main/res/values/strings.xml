@@ -17,6 +17,7 @@
         <item>37.588440</item><item>127.031892</item><item>문과대학</item> <!-- 문과대학(9) -->
         <item>37.589396</item><item>127.032442</item><item>본관</item> <!-- 본관(10) -->
         <item>37.588812</item><item>127.030482</item><item>수당삼양 패컬티하우스</item> <!-- 수당삼양 패컬티하우스(11)-->
+        <item>37.587648</item><item>127.033081</item><item>waypoint</item>
     </string-array>
 
     <string-array name="suggestion">
