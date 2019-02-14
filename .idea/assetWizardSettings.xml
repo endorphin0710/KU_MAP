@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="left_arrow" />
-                            <entry key="sourceFile" value="$USER_HOME$/Desktop/left_arrow.svg" />
+                            <entry key="outputName" value="table" />
+                            <entry key="sourceFile" value="$USER_HOME$/Desktop/table.svg" />
                           </map>
                         </option>
                       </PersistentState>

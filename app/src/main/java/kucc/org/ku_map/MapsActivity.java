@@ -381,6 +381,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+    private void init_markers(int s, int d){
+        for(int i = 0; i < latlngs.length; i++){
+            if(!nodes.get(i).value.equals("waypoint")) {
+                if(i == s)
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.start)).title(nodes.get(i).value));
+                else if(i == d)
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.destinaton_flag)).title(nodes.get(i).value));
+                else
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.tiger)).title(nodes.get(i).value));
+            }else{
+                mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(nodes.get(i).value).visible(false));
+            }
+        }
+    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -415,7 +429,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             /** Clear google map & add markers **/
             mMap.clear();
-            init_markers();
+            init_markers(source, dest);
 
             /** Clear parent information & add heuristic values(distacne from source in meters) **/
             for(Node n : nodes){
