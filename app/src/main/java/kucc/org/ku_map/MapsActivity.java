@@ -38,6 +38,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -148,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_dest.setThreshold(1);
         tv_dest.setAdapter(arrayAdapter);
 
-        /** Add TextChangedListener and set clear drawable on the right side of text view if text length > 0 **/
+        /** Add TextChangedListener and set ic_clear drawable on the right side of text view if text length > 0 **/
         tv_source.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,7 +158,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(count > 0){
-                    tv_source.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.clear), null);
+                    tv_source.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_clear), null);
                 }else{
                     tv_source.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                 }
@@ -174,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(count > 0){
-                    tv_dest.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.clear), null);
+                    tv_dest.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_clear), null);
                 }else{
                     tv_dest.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                 }
@@ -227,6 +228,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.589503, 127.032323),17));
 
+        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.darktheme);
+        mMap.setMapStyle(style);
+
         /** Set OnMarkerClickListener & OnMapClickListener **/
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
@@ -238,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setCompassEnabled(true);
 
         /** Set minimum zoom to 15 (동-scale) **/
-        mMap.setMinZoomPreference(15);
+        //mMap.setMinZoomPreference(15);
 
         /** Add markers **/
         init_markers();
@@ -375,7 +379,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void init_markers(){
         for(int i = 0; i < latlngs.length; i++){
             if(!nodes.get(i).value.equals("waypoint")) {
-                mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.tiger)).title(nodes.get(i).value));
+                mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_tiger)).title(nodes.get(i).value));
             }else{
                 mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(nodes.get(i).value).visible(false));
             }
@@ -385,11 +389,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i = 0; i < latlngs.length; i++){
             if(!nodes.get(i).value.equals("waypoint")) {
                 if(i == s)
-                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.start)).title(nodes.get(i).value));
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_start)).title(nodes.get(i).value));
                 else if(i == d)
-                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.destinaton_flag)).title(nodes.get(i).value));
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_destinaton_flag)).title(nodes.get(i).value));
                 else
-                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.tiger)).title(nodes.get(i).value));
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_tiger)).title(nodes.get(i).value));
             }else{
                 mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(nodes.get(i).value).visible(false));
             }
@@ -511,5 +515,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             /** meter = mile * 1609.34 **/
             return (dist*1609.34);
         }
+    }
+
+    public void menu1(View v){
+        Toast.makeText(getApplicationContext(), "menu1 clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void menu2(View v){
+        Toast.makeText(getApplicationContext(), "menu2 clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void menu3(View v){
+        Toast.makeText(getApplicationContext(), "menu3 clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void menu4(View v){
+        Toast.makeText(getApplicationContext(), "menu4 clicked", Toast.LENGTH_SHORT).show();
     }
 }
