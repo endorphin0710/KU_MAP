@@ -24,4 +24,49 @@
 
     </string-array>
 
+    <string-array name="latlng_busroute">
+        <item>37.591218</item><item>127.030122</item><item>1</item> <!-- 차고지 -->
+        <item>37.591167</item><item>127.030481</item><item>0</item>
+        <item>37.591265</item><item>127.030953</item><item>0</item>
+        <item>37.590982</item><item>127.031661</item><item>0</item>
+        <item>37.591260</item><item>127.032932</item><item>1</item> <!-- 법후 -->
+        <item>37.591697</item><item>127.034217</item><item>0</item>
+        <item>37.592475</item><item>127.035483</item><item>0</item>
+        <item>37.592433</item><item>127.036322</item><item>0</item>
+        <item>37.590186</item><item>127.036326</item><item>1</item> <!-- 라이시움 -->
+        <item>37.589429</item><item>127.035845</item><item>0</item>
+        <item>37.586432</item><item>127.032835</item><item>0</item>
+        <item>37.586307</item><item>127.030441</item><item>1</item> <!-- 정경대 후문, 안암-->
+        <item>37.586252</item><item>127.025538</item><item>0</item>
+        <item>37.586175</item><item>127.025533</item><item>0</item>
+        <item>37.586179</item><item>127.027368</item><item>0</item>
+        <item>37.584997</item><item>127.027529</item><item>0</item>
+        <item>37.584912</item><item>127.027475</item><item>0</item>
+        <item>37.584993</item><item>127.027266</item><item>1</item> <!-- 자연계 -->
+        <item>37.585108</item><item>127.027271</item><item>0</item>
+        <item>37.585257</item><item>127.027571</item><item>0</item>
+        <item>37.586732</item><item>127.027485</item><item>0</item>
+        <item>37.587110</item><item>127.027995</item><item>0</item>
+        <item>37.587548</item><item>127.028359</item><item>0</item>
+        <item>37.588220</item><item>127.028252</item><item>0</item>
+        <item>37.588734</item><item>127.027565</item><item>1</item> <!-- 의대 -->
+        <item>37.588960</item><item>127.027134</item><item>0</item>
+        <item>37.588854</item><item>127.026383</item><item>0</item>
+        <item>37.588935</item><item>127.025809</item><item>0</item>
+        <item>37.589309</item><item>127.025224</item><item>0</item>
+        <item>37.589789</item><item>127.024870</item><item>0</item>
+        <item>37.590278</item><item>127.024784</item><item>0</item>
+        <item>37.590635</item><item>127.024956</item><item>0</item>
+        <item>37.591171</item><item>127.025519</item><item>1</item> <!-- 화정 -->
+        <item>37.592289</item><item>127.026689</item><item>1</item> <!-- 한국학관 -->
+        <item>37.592667</item><item>127.027097</item><item>0</item>
+        <item>37.592845</item><item>127.027537</item><item>0</item>
+        <item>37.592960</item><item>127.027634</item><item>0</item>
+        <item>37.592947</item><item>127.028213</item><item>0</item>
+        <item>37.592343</item><item>127.028524</item><item>0</item>
+        <item>37.592198</item><item>127.029060</item><item>0</item>
+        <item>37.591803</item><item>127.029264</item><item>0</item>
+        <item>37.591218</item><item>127.030122</item><item>0</item> <!-- 차고지 -->
+    </string-array>
+
 </resources>

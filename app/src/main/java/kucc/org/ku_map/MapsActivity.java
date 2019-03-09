@@ -38,12 +38,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
@@ -59,23 +59,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private A_STAR astar;
 
     private ImageButton btn_pathfind;
-    private ImageButton btn_menu;
+    private ImageButton btn_bus_route;
     private Button btn_set_source;
     private Button btn_set_dest;
     private TextView tv_title;
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
     private ConstraintLayout markerWindow;
-    private ConstraintLayout menuLayout;
+    private ConstraintLayout busLayout;
 
     private String[] arr_latlng;
+    private String[] arr_buslatlng;
     private ArrayList<Node> nodes;
     private ArrayList<Integer> paths;
+    private ArrayList<Integer> lastPaths;
     private long backbtn_pressed_time;
 
-    private LatLng l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12;
-    private LatLng[] latlngs = {
-            l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12};
+    private LatLng[] latlngs_bus;
+    private LatLng[] latlngs;
+
+    int last_source;
+    int last_dest;
+    String busMessage;
+    boolean pathfind_start;
+    boolean busroute_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,19 +96,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_title = findViewById(R.id.tv_title);
         tv_source = findViewById(R.id.actv_source);
         tv_dest = findViewById(R.id.actv_dest);
+        btn_bus_route = findViewById(R.id.bus_route);
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
-        btn_menu = findViewById(R.id.btn_menu);
         markerWindow = findViewById(R.id.markerWindow);
-        menuLayout = findViewById(R.id.menuLayout);
+        busLayout = findViewById(R.id.busLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
+        latlngs = new LatLng[13];
         for(int i = 0; i < latlngs.length; i++){
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
+        }
+
+        arr_buslatlng = getResources().getStringArray(R.array.latlng_busroute);
+        latlngs_bus = new LatLng[42];
+        for(int i = 0; i < latlngs_bus.length; i++){
+            latlngs_bus[i] = new LatLng(Double.valueOf(arr_buslatlng[3*i]),Double.valueOf(arr_buslatlng[3*i+1]));
         }
 
         /** Nodes initialization **/
@@ -133,9 +147,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startLocationService();
         }
 
-        /** MarkerWindow & menu layout set INVISIBLE **/
+        /** MarkerWindow & bus layout & time_tv set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
-        menuLayout.setVisibility(View.INVISIBLE);
+        busLayout.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -213,6 +227,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        /** Thread start **/
+        Runnable runnable = new TimeRunner();
+        Thread timeThread= new Thread(runnable);
+        timeThread.start();
 
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -228,9 +246,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.589503, 127.032323),17));
 
-        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.darktheme);
-        mMap.setMapStyle(style);
-
         /** Set OnMarkerClickListener & OnMapClickListener **/
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
@@ -238,11 +253,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** Set zoom controller **/
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+        /** Set myLocation button **/
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         /** Set compass functionality **/
         mMap.getUiSettings().setCompassEnabled(true);
 
         /** Set minimum zoom to 15 (동-scale) **/
-        //mMap.setMinZoomPreference(15);
+        mMap.setMinZoomPreference(15);
 
         /** Add markers **/
         init_markers();
@@ -280,16 +298,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        btn_menu.setOnClickListener(new View.OnClickListener(){
+        btn_bus_route.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                menuLayout.setVisibility(View.VISIBLE);
-                TranslateAnimation animate = new TranslateAnimation(
-                        -menuLayout.getWidth(),0,0,0
-                );
-                animate.setDuration(300);
-                menuLayout.startAnimation(animate);
-                btn_menu.setVisibility(View.INVISIBLE);
+                if(busroute_on == true){
+                    mMap.clear();
+                    if(pathfind_start){
+                        drawPaths(lastPaths);
+                    }else{
+                        init_markers();
+                    }
+                    busroute_on = false;
+                }else{
+                    init_bus_markers();
+                    busroute_on = true;
+                }
+                busLayoutFold();
+                if(busMessage != ""){
+                    Toast.makeText(getApplicationContext(), busMessage, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -400,6 +427,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    private void init_bus_markers(){
+        PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF990000);
+        for(int i = 0; i < latlngs_bus.length; i++){
+            polyLine.add(latlngs_bus[i]);
+        }
+        mMap.addPolyline(polyLine);
+    }
+
     @Override
     public boolean onMarkerClick(Marker marker) {
         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
@@ -417,15 +452,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         markerWindowSlideDown(null);
-        menu_exit(null);
+        if (busLayout.getVisibility() == View.VISIBLE) {
+            busLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
-    public void findPath(){
-
+    private void findPath(){
+        pathfind_start = true;
         if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
             /** Retrieve source and destination marker indeces from database**/
             int source = retrieve_index(tv_source.getText().toString());
             int dest = retrieve_index(tv_dest.getText().toString());
+            last_source = source;
+            last_dest = dest;
             Log.i(TAG, "source : " + tv_source.getText().toString() + " index = " + source);
             Log.i(TAG, "destination : " + tv_dest.getText().toString() + " index = " + dest);
             if(source == -1 || dest == -1) return;
@@ -433,6 +472,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             /** Clear google map & add markers **/
             mMap.clear();
+            if(busroute_on){
+                init_bus_markers();
+            }
             init_markers(source, dest);
 
             /** Clear parent information & add heuristic values(distacne from source in meters) **/
@@ -442,15 +484,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             astar.search(nodes.get(source), nodes.get(dest));
             paths = (ArrayList)astar.printPath(nodes.get(dest));
+            lastPaths = paths;
             Log.i(TAG, "paths : " + paths);
 
             /** Draw path from source to destination using dijkstra algorithm **/
-            PolylineOptions polyLine = new PolylineOptions().width(20).color(0xFF368AFF);
+            PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
             for(int i = 0; i < paths.size()-1; i++){
                 polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
             }
             mMap.addPolyline(polyLine);
         }
+    }
+
+    private void drawPaths(ArrayList<Integer> paths){
+        PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
+        for(int i = 0; i < paths.size()-1; i++){
+            polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+        }
+        mMap.addPolyline(polyLine);
+        init_markers(last_source, last_dest);
     }
 
     /** Slide-down marker window **/
@@ -462,19 +514,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             );
             animate.setDuration(300);
             markerWindow.startAnimation(animate);
-        }
-    }
-
-    /** Fold menu **/
-    public void menu_exit(View v){
-        if(menuLayout.getVisibility() == View.VISIBLE) {
-            menuLayout.setVisibility(View.INVISIBLE);
-            TranslateAnimation animate = new TranslateAnimation(
-                    0, -menuLayout.getWidth(), 0, 0
-            );
-            animate.setDuration(300);
-            menuLayout.startAnimation(animate);
-            btn_menu.setVisibility(View.VISIBLE);
         }
     }
 
@@ -501,7 +540,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /** Calculate distacne between two points **/
-    public double cal_distance(double lat1, double lon1, double lat2, double lon2) {
+    private double cal_distance(double lat1, double lon1, double lat2, double lon2) {
         if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
         }
@@ -517,19 +556,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void menu1(View v){
-        Toast.makeText(getApplicationContext(), "menu1 clicked", Toast.LENGTH_SHORT).show();
+    public void busOnClick(View v){
+        busLayoutFold();
     }
 
-    public void menu2(View v){
-        Toast.makeText(getApplicationContext(), "menu2 clicked", Toast.LENGTH_SHORT).show();
+    private void busLayoutFold(){
+        if(busLayout.getVisibility() == View.VISIBLE){
+            busLayout.setVisibility(View.INVISIBLE);
+        }else{
+            busLayout.setVisibility(View.VISIBLE);
+        }
     }
 
-    public void menu3(View v){
-        Toast.makeText(getApplicationContext(), "menu3 clicked", Toast.LENGTH_SHORT).show();
+    class TimeRunner implements Runnable{
+        @Override
+        public void run() {
+            while(!Thread.currentThread().isInterrupted()){
+                try {
+                    countUp();
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }catch(Exception e){
+                }
+            }
+        }
     }
 
-    public void menu4(View v){
-        Toast.makeText(getApplicationContext(), "menu4 clicked", Toast.LENGTH_SHORT).show();
+    public void countUp() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                try{
+                    Date date = new Date();
+                    int day = date.getDay();
+                    int hours = date.getHours();
+                    int minutes = date.getMinutes();
+                    if( day == 0 || day == 6 ){
+                        busMessage = "주말에는 셔틀버스를 운영하지 않습니다.";
+                    }else if((hours <= 7 || (hours == 8 && minutes < 25)) || ((hours >= 19) || (hours == 18 && minutes > 15))){
+                        busMessage = "현재 셔틀버스가 운영하지 않는 시간입니다.";
+                    }else{
+                        busMessage = "";
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 }
+
+

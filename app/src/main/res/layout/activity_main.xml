@@ -24,6 +24,7 @@
         android:layout_marginRight="8dp"
         android:text="선배들이 알려주는 고려대 길의 모든 것"
         android:textSize="20dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
