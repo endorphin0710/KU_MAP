@@ -25,48 +25,101 @@
     </string-array>
 
     <string-array name="latlng_busroute">
-        <item>37.591218</item><item>127.030122</item><item>1</item> <!-- 차고지 -->
-        <item>37.591167</item><item>127.030481</item><item>0</item>
-        <item>37.591265</item><item>127.030953</item><item>0</item>
-        <item>37.590982</item><item>127.031661</item><item>0</item>
+        <item>37.591188</item><item>127.030071</item><item>1</item> <!-- 차고지 -->
+        <item>37.591173</item><item>127.030541</item><item>0</item>
+        <item>37.591258</item><item>127.030970</item><item>0</item>
+        <item>37.591032</item><item>127.031502</item><item>0</item>
+        <item>37.590968</item><item>127.031813</item><item>0</item>
+        <item>37.591096</item><item>127.032333</item><item>0</item>
         <item>37.591260</item><item>127.032932</item><item>1</item> <!-- 법후 -->
-        <item>37.591697</item><item>127.034217</item><item>0</item>
-        <item>37.592475</item><item>127.035483</item><item>0</item>
-        <item>37.592433</item><item>127.036322</item><item>0</item>
-        <item>37.590186</item><item>127.036326</item><item>1</item> <!-- 라이시움 -->
-        <item>37.589429</item><item>127.035845</item><item>0</item>
-        <item>37.586432</item><item>127.032835</item><item>0</item>
+        <item>37.591634</item><item>127.034077</item><item>0</item>
+        <item>37.592119</item><item>127.034909</item><item>0</item>
+        <item>37.592480</item><item>127.035521</item><item>0</item>
+
+        <item>37.592420</item><item>127.036315</item><item>0</item>
+        <item>37.591965</item><item>127.036354</item><item>0</item>
+        <item>37.591429</item><item>127.036349</item><item>0</item>
+        <item>37.591051</item><item>127.036338</item><item>0</item>
+        <item>37.590209</item><item>127.036333</item><item>0</item>
+        <item>37.589942</item><item>127.036116</item><item>1</item> <!-- 라이시움 -->
+        <item>37.589533</item><item>127.035920</item><item>0</item>
+        <item>37.589371</item><item>127.035823</item><item>0</item>
+        <item>37.588801</item><item>127.035228</item><item>0</item>
+        <item>37.588312</item><item>127.034734</item><item>0</item>
+
+        <item>37.588193</item><item>127.034600</item><item>0</item>
+        <item>37.587938</item><item>127.034315</item><item>0</item>
+        <item>37.587483</item><item>127.033881</item><item>0</item>
+        <item>37.586573</item><item>127.033007</item><item>0</item>
+        <item>37.586373</item><item>127.032546</item><item>0</item>
+        <item>37.586374</item><item>127.032095</item><item>0</item>
+        <item>37.586348</item><item>127.031564</item><item>0</item>
+        <item>37.586348</item><item>127.031231</item><item>0</item>
         <item>37.586307</item><item>127.030441</item><item>1</item> <!-- 정경대 후문, 안암-->
-        <item>37.586252</item><item>127.025538</item><item>0</item>
-        <item>37.586175</item><item>127.025533</item><item>0</item>
-        <item>37.586179</item><item>127.027368</item><item>0</item>
-        <item>37.584997</item><item>127.027529</item><item>0</item>
-        <item>37.584912</item><item>127.027475</item><item>0</item>
+        <item>37.586293</item><item>127.030260</item><item>0</item>
+
+        <item>37.586276</item><item>127.029697</item><item>0</item>
+        <item>37.586272</item><item>127.029461</item><item>0</item>
+        <item>37.586272</item><item>127.029461</item><item>0</item>
+        <item>37.586272</item><item>127.029461</item><item>0</item>
+        <item>37.586259</item><item>127.028785</item><item>0</item>
+        <item>37.586255</item><item>127.028238</item><item>0</item>
+        <item>37.586251</item><item>127.027669</item><item>0</item>
+        <item>37.586247</item><item>127.027476</item><item>0</item>
+        <item>37.586247</item><item>127.027476</item><item>0</item>
+        <item>37.586255</item><item>127.027122</item><item>0</item>
+
+        <item>37.586242</item><item>127.026355</item><item>0</item>
+        <item>37.586255</item><item>127.025851</item><item>0</item>
+        <item>37.586259</item><item>127.025663</item><item>0</item>
+        <item>37.586259</item><item>127.025663</item><item>0</item>
+        <item>37.586259</item><item>127.025663</item><item>0</item>
+        <item>37.586174</item><item>127.025663</item><item>0</item>
+        <item>37.586191</item><item>127.026591</item><item>0</item>
+        <item>37.586191</item><item>127.027363</item><item>0</item>
+        <item>37.585575</item><item>127.027460</item><item>0</item>
+        <item>37.585013</item><item>127.027551</item><item>0</item>
+
+        <item>37.584907</item><item>127.027471</item><item>0</item>
         <item>37.584993</item><item>127.027266</item><item>1</item> <!-- 자연계 -->
-        <item>37.585108</item><item>127.027271</item><item>0</item>
-        <item>37.585257</item><item>127.027571</item><item>0</item>
-        <item>37.586732</item><item>127.027485</item><item>0</item>
-        <item>37.587110</item><item>127.027995</item><item>0</item>
-        <item>37.587548</item><item>127.028359</item><item>0</item>
-        <item>37.588220</item><item>127.028252</item><item>0</item>
+        <item>37.585269</item><item>127.027567</item><item>0</item>
+        <item>37.585609</item><item>127.027539</item><item>0</item>
+        <item>37.586183</item><item>127.027464</item><item>0</item>
+        <item>37.586183</item><item>127.027464</item><item>0</item>
+        <item>37.586183</item><item>127.027464</item><item>0</item>
+        <item>37.586183</item><item>127.027464</item><item>0</item>
+        <item>37.586706</item><item>127.027421</item><item>0</item>
+        <item>37.586919</item><item>127.027625</item><item>0</item>
+
+        <item>37.587102</item><item>127.028006</item><item>0</item>
+        <item>37.587531</item><item>127.028339</item><item>0</item>
+        <item>37.587850</item><item>127.028350</item><item>0</item>
+        <item>37.588220</item><item>127.028237</item><item>0</item>
+        <item>37.588526</item><item>127.027883</item><item>0</item>
+        <item>37.588713</item><item>127.027593</item><item>0</item>
         <item>37.588734</item><item>127.027565</item><item>1</item> <!-- 의대 -->
-        <item>37.588960</item><item>127.027134</item><item>0</item>
-        <item>37.588854</item><item>127.026383</item><item>0</item>
-        <item>37.588935</item><item>127.025809</item><item>0</item>
-        <item>37.589309</item><item>127.025224</item><item>0</item>
-        <item>37.589789</item><item>127.024870</item><item>0</item>
-        <item>37.590278</item><item>127.024784</item><item>0</item>
-        <item>37.590635</item><item>127.024956</item><item>0</item>
+        <item>37.588943</item><item>127.027084</item><item>0</item>
+        <item>37.588862</item><item>127.026397</item><item>0</item>
+        <item>37.589024</item><item>127.025555</item><item>0</item>
+
+        <item>37.590006</item><item>127.024777</item><item>0</item>
+        <item>37.590610</item><item>127.024932</item><item>0</item>
         <item>37.591171</item><item>127.025519</item><item>1</item> <!-- 화정 -->
+        <item>37.591507</item><item>127.025898</item><item>0</item>
+        <item>37.592004</item><item>127.026386</item><item>0</item>
         <item>37.592289</item><item>127.026689</item><item>1</item> <!-- 한국학관 -->
-        <item>37.592667</item><item>127.027097</item><item>0</item>
-        <item>37.592845</item><item>127.027537</item><item>0</item>
-        <item>37.592960</item><item>127.027634</item><item>0</item>
-        <item>37.592947</item><item>127.028213</item><item>0</item>
-        <item>37.592343</item><item>127.028524</item><item>0</item>
-        <item>37.592198</item><item>127.029060</item><item>0</item>
-        <item>37.591803</item><item>127.029264</item><item>0</item>
-        <item>37.591218</item><item>127.030122</item><item>0</item> <!-- 차고지 -->
+        <item>37.592654</item><item>127.027062</item><item>0</item>
+        <item>37.592758</item><item>127.027287</item><item>0</item>
+        <item>37.592843</item><item>127.027550</item><item>0</item>
+        <item>37.592958</item><item>127.027641</item><item>0</item>
+
+        <item>37.592962</item><item>127.028081</item><item>0</item>
+        <item>37.592826</item><item>127.028333</item><item>0</item>
+        <item>37.592409</item><item>127.028467</item><item>0</item>
+        <item>37.592298</item><item>127.028644</item><item>0</item>
+        <item>37.592200</item><item>127.029089</item><item>0</item>
+        <item>37.591800</item><item>127.029250</item><item>0</item>
+        <item>37.591188</item><item>127.030071</item><item>1</item> <!-- 차고지 (87th)-->
     </string-array>
 
 </resources>

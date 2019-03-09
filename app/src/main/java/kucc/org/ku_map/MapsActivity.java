@@ -70,19 +70,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String[] arr_latlng;
     private String[] arr_buslatlng;
-    private ArrayList<Node> nodes;
-    private ArrayList<Integer> paths;
-    private ArrayList<Integer> lastPaths;
-    private long backbtn_pressed_time;
-
     private LatLng[] latlngs_bus;
     private LatLng[] latlngs;
+    private ArrayList<Node> nodes;
+    private ArrayList<Integer> paths;
+    private ArrayList<Integer> bus_location;
 
-    int last_source;
-    int last_dest;
-    String busMessage;
-    boolean pathfind_start;
-    boolean busroute_on;
+    private int interval_renew = 0;
+    private long backbtn_pressed_time;
+
+    private int last_source;
+    private int last_dest;
+    private String busMessage;
+    private boolean pathfind_start;
+    private boolean busroute_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         busLayout = findViewById(R.id.busLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
+        paths = new ArrayList<>();
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
@@ -113,10 +115,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         arr_buslatlng = getResources().getStringArray(R.array.latlng_busroute);
-        latlngs_bus = new LatLng[42];
+        latlngs_bus = new LatLng[87];
         for(int i = 0; i < latlngs_bus.length; i++){
             latlngs_bus[i] = new LatLng(Double.valueOf(arr_buslatlng[3*i]),Double.valueOf(arr_buslatlng[3*i+1]));
         }
+        bus_location = new ArrayList<>();
 
         /** Nodes initialization **/
         for(int i = 0; i < latlngs.length; i++){
@@ -304,19 +307,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(busroute_on == true){
                     mMap.clear();
                     if(pathfind_start){
-                        drawPaths(lastPaths);
+                        drawPaths(paths);
                     }else{
                         init_markers();
                     }
                     busroute_on = false;
                 }else{
-                    init_bus_markers();
+                    if(busMessage != ""){
+                        Toast.makeText(getApplicationContext(), busMessage, Toast.LENGTH_SHORT).show();
+                    }
+                    update_bus_location(bus_location);
                     busroute_on = true;
                 }
                 busLayoutFold();
-                if(busMessage != ""){
-                    Toast.makeText(getApplicationContext(), busMessage, Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -430,13 +433,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void init_bus_markers(){
         PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF990000);
         for(int i = 0; i < latlngs_bus.length; i++){
+            if(arr_buslatlng[3*i+2].equals("1")){
+                mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_busstop)).title("busmarker"));
+            }
             polyLine.add(latlngs_bus[i]);
         }
         mMap.addPolyline(polyLine);
     }
 
+    private void update_bus_location(ArrayList<Integer> buses){
+        mMap.clear();
+        if(pathfind_start){
+            drawPaths(paths);
+            init_markers(last_source, last_dest);
+        }else{
+            init_markers();
+        }
+        init_bus_markers();
+        for(Integer i : buses){
+            mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_bus_current)).title("busmarker"));
+        }
+
+    }
+
     @Override
     public boolean onMarkerClick(Marker marker) {
+        if(marker.getTitle().equals("busmarker")){
+            return true;
+        }
         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
 
         markerWindow.setVisibility(View.VISIBLE);
@@ -474,6 +498,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.clear();
             if(busroute_on){
                 init_bus_markers();
+                update_bus_location(bus_location);
             }
             init_markers(source, dest);
 
@@ -484,7 +509,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             astar.search(nodes.get(source), nodes.get(dest));
             paths = (ArrayList)astar.printPath(nodes.get(dest));
-            lastPaths = paths;
             Log.i(TAG, "paths : " + paths);
 
             /** Draw path from source to destination using dijkstra algorithm **/
@@ -497,12 +521,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void drawPaths(ArrayList<Integer> paths){
-        PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
-        for(int i = 0; i < paths.size()-1; i++){
-            polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+        if(pathfind_start){
+            PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
+            for(int i = 0; i < paths.size()-1; i++){
+                polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+            }
+            mMap.addPolyline(polyLine);
+            init_markers(last_source, last_dest);
         }
-        mMap.addPolyline(polyLine);
-        init_markers(last_source, last_dest);
     }
 
     /** Slide-down marker window **/
@@ -569,11 +595,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     class TimeRunner implements Runnable{
+
         @Override
         public void run() {
             while(!Thread.currentThread().isInterrupted()){
                 try {
-                    countUp();
+                    shuttle();
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -583,7 +610,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void countUp() {
+    private void shuttle() {
         runOnUiThread(new Runnable() {
             public void run() {
                 try{
@@ -591,17 +618,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     int day = date.getDay();
                     int hours = date.getHours();
                     int minutes = date.getMinutes();
+                    int seconds = date.getSeconds();
+                    if(interval_renew >= 10){
+                        interval_renew = 0;
+                    }
+                    interval_renew++;
                     if( day == 0 || day == 6 ){
                         busMessage = "주말에는 셔틀버스를 운영하지 않습니다.";
                     }else if((hours <= 7 || (hours == 8 && minutes < 25)) || ((hours >= 19) || (hours == 18 && minutes > 15))){
                         busMessage = "현재 셔틀버스가 운영하지 않는 시간입니다.";
                     }else{
                         busMessage = "";
+                        if((hours == 4 && minutes == 20 && seconds == 0) || (hours == 4 && minutes == 20 && seconds == 30) || (hours == 4 && minutes == 21 && seconds == 0)){
+                            bus_location.add(0);
+                            if(busroute_on) {
+                                update_bus_location(bus_location);
+                            }
+                        }
+                        if(interval_renew == 10 && busroute_on){
+                            for(int i = 0; i < bus_location.size(); i++){
+                                int loc = bus_location.get(i);
+                                if(loc > 87){
+                                    bus_location.remove(i);
+                                    continue;
+                                }
+                                loc += 1;
+                                bus_location.set(i, loc);
+                            }
+                            update_bus_location(bus_location);
+                        }
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
         });
     }
 
