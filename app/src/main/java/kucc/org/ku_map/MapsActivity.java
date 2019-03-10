@@ -118,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
         }
 
+        /** Instantiate bus route markers **/
         arr_buslatlng = getResources().getStringArray(R.array.latlng_busroute);
         latlngs_bus = new LatLng[87];
         for(int i = 0; i < latlngs_bus.length; i++){
@@ -297,16 +298,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 tv_source.setText(tv_title.getText());
+                markerWindowSlideDown(null);
             }
         });
         btn_set_dest.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 tv_dest.setText(tv_title.getText());
+                markerWindowSlideDown(null);
             }
         });
 
-        /** bus route * real time location button click listener **/
+        /** Bus route & real time location button click listener **/
         btn_bus_route.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -339,6 +342,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /** Location Permission Check **/
     private void checkPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -398,6 +402,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    /** Retrieve index of location from database **/
     private int retrieve_index(String location){
         int i = -1;
         if(db != null){
@@ -428,14 +433,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(latlngs[i]).title(nodes.get(i).value).visible(false));
             }
         }
-    }
+}
+    /** Initiate Markers with source and destination **/
     private void init_markers(int s, int d){
         for(int i = 0; i < latlngs.length; i++){
             if(!nodes.get(i).value.equals("waypoint")) {
                 if(i == s)
-                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_start)).title(nodes.get(i).value));
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_source_flag)).title(nodes.get(i).value));
                 else if(i == d)
-                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_destinaton_flag)).title(nodes.get(i).value));
+                    mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_destination_flag)).title(nodes.get(i).value));
                 else
                     mMap.addMarker(new MarkerOptions().position(latlngs[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_tiger)).title(nodes.get(i).value));
             }else{
@@ -444,6 +450,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /** Make markers on circulator shuttle route **/
     private void init_bus_markers(){
         PolylineOptions polyLine = new PolylineOptions().width(10).color(0xFF990000);
         for(int i = 0; i < latlngs_bus.length; i++){
@@ -455,6 +462,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addPolyline(polyLine);
     }
 
+    /** Update real-time shuttle location **/
     private void update_bus_location(ArrayList<Integer> buses){
         mMap.clear();
         if(pathfind_start){
@@ -470,6 +478,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /** On marker clicked **/
     @Override
     public boolean onMarkerClick(Marker marker) {
         if(marker.getTitle().equals("busmarker")){
@@ -487,6 +496,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return true;
     }
 
+    /** On Googlemap clicked **/
     @Override
     public void onMapClick(LatLng latLng) {
         markerWindowSlideDown(null);
@@ -498,6 +508,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /** Path find **/
     private void findPath(){
         pathfind_start = true;
         if(!isEmpty(tv_source) && !isEmpty(tv_dest )){
@@ -537,6 +548,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /** Redraw last-saved path **/
     private void drawPaths(ArrayList<Integer> paths){
         if(pathfind_start){
             PolylineOptions polyLine = new PolylineOptions().width(10).color(0xFF368AFF);
@@ -599,10 +611,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**  Shuttle functionality onclick method **/
     public void busOnClick(View v){
         busLayoutFold();
     }
 
+    /** Fold shuttle window **/
     private void busLayoutFold(){
         if(busLayout.getVisibility() == View.VISIBLE){
             busLayout.setVisibility(View.INVISIBLE);
@@ -611,6 +625,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /** Fold shuttle info window **/
     public void busInfoLayoutFold(View v){
         if(busInfoLayout.getVisibility() == View.VISIBLE){
             busInfoLayout.setVisibility(View.INVISIBLE);
@@ -652,10 +667,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if( day == 0 || day == 6 ){
                         busMessage = "주말에는 셔틀버스를 운영하지 않습니다.";
                     }else if((hours <= 7 || (hours == 8 && minutes < 25)) || ((hours >= 19) || (hours == 18 && minutes > 15))){
-                        busMessage = "현재 셔틀버스가 운영하지 않는 시간입니다.";
+                        busMessage = "현재 운영중인 셔틀버스가 없습니다.";
                     }else{
                         busMessage = "";
-                        if((hours == 4 && minutes == 20 && seconds == 0) || (hours == 4 && minutes == 20 && seconds == 30) || (hours == 4 && minutes == 21 && seconds == 0)){
+                        if((hours == 8 && minutes == 25 && seconds == 0) || (hours == 8 && minutes == 35 && seconds == 0) || (hours == 8 && minutes == 45 && seconds == 0) || (hours == 8 && minutes == 55 && seconds == 0) ||
+                           (hours == 9 && minutes == 0 && seconds == 0) || (hours == 9 && minutes == 10 && seconds == 0) || (hours == 9 && minutes == 20 && seconds == 0) || (hours == 9 && minutes == 30 && seconds == 0) || (hours == 9 && minutes == 40 && seconds == 0) || (hours == 9 && minutes == 50 && seconds == 0) ||
+                           (hours == 10 && minutes == 0 && seconds == 0) || (hours == 10 && minutes == 10 && seconds == 0) || (hours == 10 && minutes == 20 && seconds == 0) || (hours == 10 && minutes == 30 && seconds == 0) || (hours == 10 && minutes == 40 && seconds == 0) || (hours == 10 && minutes == 50 && seconds == 0) ||
+                           (hours == 11 && minutes == 0 && seconds == 0) || (hours == 11 && minutes == 10 && seconds == 0) || (hours == 11 && minutes == 20 && seconds == 0) || (hours == 11 && minutes == 25 && seconds == 0) || (hours == 11 && minutes == 30 && seconds == 0) || (hours == 11 && minutes == 35 && seconds == 0) || (hours == 11 && minutes == 45 && seconds == 0) || (hours == 11 && minutes == 55 && seconds == 0) ||
+                           (hours == 12 && minutes == 40 && seconds == 0) || (hours == 12 && minutes == 50 && seconds == 0) ||
+                           (hours == 13 && minutes == 0 && seconds == 0) || (hours == 13 && minutes == 10 && seconds == 0) || (hours == 13 && minutes == 20 && seconds == 0) || (hours == 13 && minutes == 25 && seconds == 0) || (hours == 13 && minutes == 30 && seconds == 0) || (hours == 13 && minutes == 35 && seconds == 0) || (hours == 11 && minutes == 45 && seconds == 0) || (hours == 13 && minutes == 55 && seconds == 0) ||
+                           (hours == 14 && minutes == 0 && seconds == 0) || (hours == 14 && minutes == 10 && seconds == 0) || (hours == 14 && minutes == 20 && seconds == 0) || (hours == 14 && minutes == 30 && seconds == 0) || (hours == 14 && minutes == 40 && seconds == 0) || (hours == 14 && minutes == 50 && seconds == 0) ||
+                           (hours == 15 && minutes == 0 && seconds == 0) || (hours == 15 && minutes == 10 && seconds == 0) || (hours == 15 && minutes == 20 && seconds == 0) || (hours == 15 && minutes == 30 && seconds == 0) || (hours == 15 && minutes == 40 && seconds == 0) || (hours == 15 && minutes == 50 && seconds == 0) ||
+                           (hours == 16 && minutes == 0 && seconds == 0) || (hours == 16 && minutes == 20 && seconds == 0) || (hours == 16 && minutes == 40 && seconds == 0) ||
+                           (hours == 17 && minutes == 0 && seconds == 0) || (hours == 17 && minutes == 20 && seconds == 0) || (hours == 17 && minutes == 40 && seconds == 0) || (hours == 17 && minutes == 50 && seconds == 0)){
                             bus_location.add(0);
                             if(busroute_on) {
                                 update_bus_location(bus_location);
