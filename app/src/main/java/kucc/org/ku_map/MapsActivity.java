@@ -60,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private ImageButton btn_pathfind;
     private ImageButton btn_bus_route;
+    private ImageButton btn_bus_info;
     private Button btn_set_source;
     private Button btn_set_dest;
     private TextView tv_title;
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private AutoCompleteTextView tv_dest;
     private ConstraintLayout markerWindow;
     private ConstraintLayout busLayout;
+    private ConstraintLayout busInfoLayout;
 
     private String[] arr_latlng;
     private String[] arr_buslatlng;
@@ -98,11 +100,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_source = findViewById(R.id.actv_source);
         tv_dest = findViewById(R.id.actv_dest);
         btn_bus_route = findViewById(R.id.bus_route);
+        btn_bus_info = findViewById(R.id.bus_info);
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
         markerWindow = findViewById(R.id.markerWindow);
         busLayout = findViewById(R.id.busLayout);
+        busInfoLayout = findViewById(R.id.busInfoLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
         paths = new ArrayList<>();
@@ -153,6 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /** MarkerWindow & bus layout & time_tv set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
         busLayout.setVisibility(View.INVISIBLE);
+        busInfoLayout.setVisibility(View.INVISIBLE);
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -301,10 +306,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        /** bus route * real time location button click listener **/
         btn_bus_route.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(busroute_on == true){
+                if(busroute_on){
                     mMap.clear();
                     if(pathfind_start){
                         drawPaths(paths);
@@ -320,6 +326,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     busroute_on = true;
                 }
                 busLayoutFold();
+            }
+        });
+
+        /** bus timetable button click listener **/
+        btn_bus_info.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                busInfoLayoutFold(null);
             }
         });
 
@@ -431,7 +445,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void init_bus_markers(){
-        PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF990000);
+        PolylineOptions polyLine = new PolylineOptions().width(10).color(0xFF990000);
         for(int i = 0; i < latlngs_bus.length; i++){
             if(arr_buslatlng[3*i+2].equals("1")){
                 mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_busstop)).title("busmarker"));
@@ -479,6 +493,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (busLayout.getVisibility() == View.VISIBLE) {
             busLayout.setVisibility(View.INVISIBLE);
         }
+        if(busInfoLayout.getVisibility() == View.VISIBLE){
+            busInfoLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void findPath(){
@@ -522,7 +539,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void drawPaths(ArrayList<Integer> paths){
         if(pathfind_start){
-            PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
+            PolylineOptions polyLine = new PolylineOptions().width(10).color(0xFF368AFF);
             for(int i = 0; i < paths.size()-1; i++){
                 polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
             }
@@ -591,6 +608,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             busLayout.setVisibility(View.INVISIBLE);
         }else{
             busLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void busInfoLayoutFold(View v){
+        if(busInfoLayout.getVisibility() == View.VISIBLE){
+            busInfoLayout.setVisibility(View.INVISIBLE);
+        }else{
+            onMapClick(new LatLng(37.589503, 127.032323));
+            busInfoLayout.setVisibility(View.VISIBLE);
         }
     }
 
