@@ -116,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         /** Instantiate markers **/
         arr_latlng = getResources().getStringArray(R.array.latlng);
-        latlngs = new LatLng[194];
+        latlngs = new LatLng[195];
         for(int i = 0; i < latlngs.length; i++){
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
         }
@@ -583,12 +583,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             paths = (ArrayList)astar.printPath(nodes.get(dest));
             Log.i(TAG, "paths : " + paths);
 
+            double distance_total = 0;
             /** Draw path from source to destination using A* algorithm **/
             PolylineOptions polyLine = new PolylineOptions().width(15).color(0xFF368AFF);
             for(int i = 0; i < paths.size()-1; i++){
                 polyLine.add(latlngs[paths.get(i)], latlngs[paths.get(i+1)]);
+                distance_total += cal_distance(nodes.get(paths.get(i)), nodes.get(paths.get(i+1)));
             }
             mMap.addPolyline(polyLine);
+            Toast.makeText(this, "예상 소요 시간 : " + Math.round((distance_total/1.4)/60) + "분 " + Math.round((distance_total/1.4)%60) +"초", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -639,23 +642,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /** Calculate distacne between two points **/
     private double cal_distance(Node n1, Node n2) {
-        double lat1 = n1.latitude;
-        double lat2 = n2.latitude;
-        double lon1 = n1.longitude;
-        double lon2 = n2.longitude;
-        if ((lat1 == lat2) && (lon1 == lon2)) {
-            return 0;
-        }
-        else {
-            double theta = lon1 - lon2;
-            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
-            dist = Math.acos(dist);
-            dist = Math.toDegrees(dist);
-            dist = dist * 60 * 1.1515;
+        double theta = n1.longitude - n2.longitude;
+        double dist = Math.sin(deg2rad(n1.latitude)) * Math.sin(deg2rad(n2.latitude)) + Math.cos(deg2rad(n1.latitude)) * Math.cos(deg2rad(n2.latitude)) * Math.cos(deg2rad(theta));
 
-            /** meter = mile * 1609.34 **/
-            return (dist*1609.34);
-        }
+        dist = Math.acos(dist);
+        dist = (dist * 180 / Math.PI);
+        dist = dist * 60 * 1.1515 * 1609.344;
+
+        return dist;
+    }
+    private  double deg2rad(double deg) {
+        return deg * (Math.PI/180.0);
     }
 
     /**  Shuttle functionality onclick method **/
@@ -846,7 +843,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         set_adjacency(nodes.get(90), new int[]{84,91,162});
         set_adjacency(nodes.get(91), new int[]{90,92,94});
         set_adjacency(nodes.get(92), new int[]{91,93});
-        set_adjacency(nodes.get(93), new int[]{92,95,158,193});
+        set_adjacency(nodes.get(93), new int[]{92,95,158,194});
         set_adjacency(nodes.get(94), new int[]{91,95});
         set_adjacency(nodes.get(95), new int[]{93,96});
         set_adjacency(nodes.get(96), new int[]{95,97,98,157});
@@ -912,8 +909,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         set_adjacency(nodes.get(156), new int[]{152,155,151});
         set_adjacency(nodes.get(157), new int[]{155,154,158});
         set_adjacency(nodes.get(158), new int[]{157,93,159});
-        set_adjacency(nodes.get(159), new int[]{158,151,160});
-        set_adjacency(nodes.get(160), new int[]{159,162,161,164});
+        set_adjacency(nodes.get(159), new int[]{158,151,194});
+        set_adjacency(nodes.get(160), new int[]{162,161,164,194});
         set_adjacency(nodes.get(161), new int[]{160,162});
         set_adjacency(nodes.get(162), new int[]{160,161,163,90});
         set_adjacency(nodes.get(163), new int[]{162});
@@ -946,7 +943,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         set_adjacency(nodes.get(190), new int[]{139});
         set_adjacency(nodes.get(191), new int[]{122,166});
         set_adjacency(nodes.get(192), new int[]{124,118,114});
-        set_adjacency(nodes.get(193), new int[]{93,148});
+        set_adjacency(nodes.get(193), new int[]{194,148});
+        set_adjacency(nodes.get(194), new int[]{160,193,159,93});
     }
 
     private void set_adjacency(Node n, int[] arr){

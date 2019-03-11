@@ -200,6 +200,7 @@
         <item>37.589666</item><item>127.029132</item><item>waypoint</item> <!-- (191) -->
         <item>37.590132</item><item>127.034348</item><item>waypoint</item> <!-- (192) -->
         <item>37.589595</item><item>127.032023</item><item>다람쥐길</item> <!-- 다람쥐길(193) -->
+        <item>37.589422</item><item>127.031838</item><item>waypoint</item> <!-- (194) -->
     </string-array>
 
     <string-array name="suggestion">
