@@ -152,7 +152,7 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="18dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -191,7 +191,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:paddingLeft="5dp"
-            android:text="ㆍ 셔틀버스는 월요일부터 금요일까지 운행합니다."
+            android:text="ㆍ 캠퍼스 주변 교통상황에 따라 지연도착 할 수 있습니다."
             android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -376,6 +376,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/graduation"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/ic_graduation"
+            android:onClick="markerWindowSlideDown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/setSource"
             android:layout_width="260dp"
@@ -414,13 +426,15 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginTop="8dp"
             android:paddingLeft="5dp"
             android:text=""
             android:textColor="@color/crimson"
             android:textSize="25dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/guideline_title"
+            app:layout_constraintStart_toEndOf="@+id/graduation"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.constraint.Guideline
@@ -432,6 +446,21 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_hide_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/rounded_edittext_clickable"
+        android:text="건물 나타내기"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toBottomOf="@+id/serachLayout" />
 
 </android.support.constraint.ConstraintLayout>
 

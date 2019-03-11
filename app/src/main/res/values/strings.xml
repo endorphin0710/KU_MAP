@@ -6,23 +6,289 @@
     <string name="google_maps_key">AIzaSyDsH04_4BjPh0x4MxzWaH1dSApN1egs2fQ</string>
 
     <string-array name="latlng">
-        <item>37.586785</item><item>127.029899</item><item>정경대 후문</item> <!-- 정경대 후문(0) -->
-        <item>37.587243</item><item>127.031754</item><item>민주광장</item> <!-- 민주광장(1) -->
-        <item>37.588145</item><item>127.034264</item><item>정문</item> <!-- 정문(2) -->
-        <item>37.589165</item><item>127.034248</item><item>백주년기념관</item> <!-- 백주년기념관(3) -->
-        <item>37.589628</item><item>127.035820</item><item>고려대역 1번출구</item> <!-- 고려대역 1번출구(4) -->
-        <item>37.590579</item><item>127.034370</item><item>중앙도서관</item> <!-- 중앙도서관(5)-->
-        <item>37.591277</item><item>127.034117</item><item>운초우선교육관</item> <!-- 운초우선교육관(6) -->
-        <item>37.590089</item><item>127.032618</item><item>동원글로벌리더십홀</item> <!-- 동원글로벌리더십홀(7) -->
-        <item>37.591228</item><item>127.032958</item><item>법대 후문</item> <!-- 법대 후문(8) -->
-        <item>37.588440</item><item>127.031892</item><item>문과대학</item> <!-- 문과대학(9) -->
-        <item>37.589396</item><item>127.032442</item><item>본관</item> <!-- 본관(10) -->
-        <item>37.588812</item><item>127.030482</item><item>수당삼양 패컬티하우스</item> <!-- 수당삼양 패컬티하우스(11)-->
-        <item>37.587648</item><item>127.033081</item><item>waypoint</item>
+        <item>37.586266</item><item>127.029352</item><item>안암역</item> <!-- 안암역(0) -->
+        <item>37.586242</item><item>127.027421</item><item>이공계 정문</item> <!-- 이공계 정문(1)-->
+        <item>37.585753</item><item>127.027475</item><item>waypoint</item> <!-- (2) -->
+        <item>37.585272</item><item>127.027531</item><item>waypoint</item> <!-- (3) -->
+        <item>37.585497</item><item>127.028016</item><item>생명과학관 동관</item> <!-- 생명과학관 동관(4) -->
+        <item>37.585140</item><item>127.028290</item><item>우정정보관</item> <!-- 우정정보관(5) -->
+        <item>37.584832</item><item>127.028019</item><item>미래융합기술관</item> <!-- 미래융합기술관(6) -->
+        <item>37.584928</item><item>127.027520</item><item>waypoint</item> <!-- (7) -->
+        <item>37.584516</item><item>127.027842</item><item>애기능생활관 정문</item> <!-- (8) -->
+        <item>37.584337</item><item>127.028011</item><item>waypoint</item> <!-- (9) -->
+        <item>37.584539</item><item>127.028443</item><item>정보전산처</item> <!-- 정보전산처, 제1실험(10) -->
+        <item>37.583614</item><item>127.028416</item><item>노벨광장</item> <!-- 노벨광(11) -->
+        <item>37.583580</item><item>127.028867</item><item>이공계 후문(소울키친)</item> <!-- 이공계 후문(소울키친)(12) -->
+        <item>37.583565</item><item>127.029473</item><item>waypoint</item> <!-- (13) -->
+        <item>37.584723</item><item>127.029419</item><item>참살이길</item> <!-- 참살이길(14) -->
+        <item>37.583509</item><item>127.028129</item><item>waypoint</item> <!-- (15) -->
+        <item>37.583843</item><item>127.027914</item><item>이학관별관</item> <!-- 이학관별관(16) -->
+        <item>37.584087</item><item>127.027702</item><item>환경실험관</item> <!-- 환경실험관(17) -->
+        <item>37.583989</item><item>127.027471</item><item>waypoint</item> <!-- (18) -->
+        <item>37.583572</item><item>127.027334</item><item>waypoint</item> <!-- (19) -->
+        <item>37.584016</item><item>127.026975</item><item>애기능 동산</item> <!-- 애기능 동산(20) -->
+        <item>37.583748</item><item>127.026693</item><item>waypoint</item> <!-- (21) -->
+        <item>37.584207</item><item>127.026390</item><item>waypoint</item> <!-- (22) -->
+        <item>37.584462</item><item>127.026626</item><item>waypoint</item> <!-- (23) -->
+        <item>37.584513</item><item>127.027015</item><item>waypoint</item> <!-- (24) -->
+        <item>37.584611</item><item>127.027291</item><item>애기능생활관 옆문</item> <!-- 애기능생활관 옆문(25) -->
+        <item>37.584751</item><item>127.027608</item><item>waypoint</item> <!-- (26) -->
+        <item>37.582725</item><item>127.027935</item><item>waypoint</item> <!-- (27) -->
+        <item>37.582474</item><item>127.028184</item><item>이공계 후문(문화사)</item> <!-- 이공계 후문(문화사)(28) -->
+        <item>37.583243</item><item>127.027543</item><item>제2공학관</item> <!-- 제2공학관(29) -->
+        <item>37.582979</item><item>127.026985</item><item>농구코트(이공계)</item> <!-- 농구코트(이공계)(30) -->
+        <item>37.582458</item><item>127.027339</item><item>애기능 학생회관</item> <!-- 애기능 학생회관(31) -->
+        <item>37.582443</item><item>127.026569</item><item>신공학관</item> <!-- 신공학관(32) -->
+        <item>37.582853</item><item>127.026590</item><item>waypoint</item> <!-- (33) -->
+        <item>37.583378</item><item>127.026212</item><item>창의관</item> <!-- 창의관(34) -->
+        <item>37.583975</item><item>127.025955</item><item>waypoint</item> <!-- (35) -->
+        <item>37.584445</item><item>127.025754</item><item>waypoint</item> <!-- (36) -->
+        <item>37.583835</item><item>127.025336</item><item>공학관</item> <!-- 공학관(37) -->
+        <item>37.584160</item><item>127.025154</item><item>waypoint</item> <!-- (38) -->
+        <item>37.584047</item><item>127.024862</item><item>waypoint</item> <!-- (39) -->
+        <item>37.584260</item><item>127.024701</item><item>산학관</item> <!-- 산학관(40) -->
+        <item>37.584428</item><item>127.025090</item><item>하나스퀘어 입구(3)</item> <!-- 하나스퀘어 입구(3)(41) -->
+        <item>37.584528</item><item>127.024529</item><item>waypoint</item> <!-- (42) -->
+        <item>37.584677</item><item>127.024902</item><item>waypoint</item> <!-- (43) -->
+        <item>37.584968</item><item>127.025522</item><item>아산이학관</item> <!-- 아산이학관(44) -->
+        <item>37.585229</item><item>127.026104</item><item>waypoint</item> <!-- (45) -->
+        <item>37.584866</item><item>127.026032</item><item>하나스퀘어 지상</item> <!-- 하나스퀘어 지상(46) -->
+        <item>37.585025</item><item>127.026351</item><item>하나스퀘어 입구(2)</item> <!-- 하나스퀘어 입구(2)(47) -->
+        <item>37.584747</item><item>127.026448</item><item>과학도서관</item> <!-- 과학도서관(48) -->
+        <item>37.585826</item><item>127.025670</item><item>하나과학관</item> <!-- 하나과학관(49) -->
+        <item>37.585380</item><item>127.026402</item><item>생명과학관 서관(</item> <!-- 생명과학관 서관((50) -->
+        <item>37.585131</item><item>127.026587</item><item>하나스퀘어 입구(1)</item> <!-- 하나스퀘어 입구(1)(51) -->
+        <item>37.585556</item><item>127.026890</item><item>waypoint</item> <!-- (52) -->
+        <item>37.585244</item><item>127.027150</item><item>waypoint</item> <!-- (53) -->
+        <item>37.585027</item><item>127.027244</item><item>셔틀버스정류장(이공계)</item> <!-- 셔틀버스정류장(이공계)(54) -->
+        <item>37.586056</item><item>127.025501</item><item>waypoint</item> <!-- (55) -->
+        <item>37.586557</item><item>127.027419</item><item>waypoint</item> <!-- (56) -->
+        <item>37.586232</item><item>127.025431</item><item>waypoint</item> <!-- (57) -->
+        <item>37.586886</item><item>127.025524</item><item>고려대학교병원 응급의료센터</item> <!-- 고려대학교병원 응급의료센터(58) -->
+        <item>37.586935</item><item>127.026911</item><item>고려대학교 안암병원</item> <!-- 고려대학교 안암병원(59) -->
+        <item>37.586886</item><item>127.027600</item><item>waypoint</item> <!-- (60) -->
+        <item>37.587225</item><item>127.028138</item><item>waypoint</item> <!-- (61) -->
+        <item>37.587667</item><item>127.028350</item><item>waypoint</item> <!-- (62) -->
+        <item>37.588241</item><item>127.028232</item><item>waypoint</item> <!-- (63) -->
+        <item>37.588721</item><item>127.027572</item><item>의과대학</item> <!-- 의과대학(64) -->
+        <item>37.588946</item><item>127.027089</item><item>waypoint</item> <!-- (65) -->
+        <item>37.588861</item><item>127.026397</item><item>waypoint</item> <!-- (66) -->
+        <item>37.588967</item><item>127.025700</item><item>장례식장</item> <!-- 장례식장(67) -->
+        <item>37.586331</item><item>127.029923</item><item>waypoint</item> <!-- (68) -->
+        <item>37.586448</item><item>127.029915</item><item>waypoint</item> <!-- (69) -->
+        <item>37.586486</item><item>127.030044</item><item>waypoint</item> <!-- (70) -->
+        <item>37.586303</item><item>127.030173</item><item>waypoint</item> <!-- (71) -->
+        <item>37.586777</item><item>127.029889</item><item>정경대 후문</item> <!-- 정경대 후문, 정경대학(1)(72) -->
+        <item>37.586380</item><item>127.031463</item><item>waypoint</item> <!-- (73) -->
+        <item>37.587411</item><item>127.030597</item><item>정경대학(2)</item> <!-- 정경대학(2)(74) -->
+        <item>37.587619</item><item>127.030618</item><item>타이거플라자</item> <!-- 타이거플라자(75) -->
+        <item>37.587925</item><item>127.030961</item><item>국제관</item> <!-- 국제관(76) -->
+        <item>37.586724</item><item>127.030245</item><item>waypoint</item> <!-- (77) -->
+        <item>37.586775</item><item>127.030339</item><item>파이빌리지</item> <!-- 파이빌리지(78) -->
+        <item>37.586907</item><item>127.030460</item><item>미디어관</item> <!-- 미디어관(79) -->
+        <item>37.587338</item><item>127.031090</item><item>waypoint</item> <!-- (80) -->
+        <item>37.587002</item><item>127.031495</item><item>우당교양관</item> <!-- 우당교양관(81) -->
+        <item>37.587556</item><item>127.031331</item><item>홍보관</item> <!-- 홍보관(82) -->
+        <item>37.587781</item><item>127.031610</item><item>waypoint</item> <!-- (83) -->
+        <item>37.588098</item><item>127.031202</item><item>waypoint</item> <!-- (84) -->
+        <item>37.588089</item><item>127.031548</item><item>waypoint</item> <!-- (85) -->
+        <item>37.587235</item><item>127.031768</item><item>민주광장</item> <!-- 민주광장(86) -->
+        <item>37.587243</item><item>127.032288</item><item>waypoint</item> <!-- (87) -->
+        <item>37.587024</item><item>127.032057</item><item>학생회관</item> <!-- 학생회관(88) -->
+        <item>37.586811</item><item>127.031797</item><item>waypoint</item> <!-- (89) -->
+        <item>37.588491</item><item>127.031174</item><item>waypoint</item> <!-- (90) -->
+        <item>37.588825</item><item>127.031587</item><item>waypoint</item> <!-- (91) -->
+        <item>37.589004</item><item>127.031389</item><item>waypoint</item> <!-- (92) -->
+        <item>37.589155</item><item>127.031550</item><item>waypoint</item> <!-- (93) -->
+        <item>37.588673</item><item>127.031805</item><item>waypoint</item> <!-- (94) -->
+        <item>37.588857</item><item>127.032038</item><item>waypoint</item> <!-- (95) -->
+        <item>37.588725</item><item>127.032234</item><item>waypoint</item> <!-- (96) -->
+        <item>37.588434</item><item>127.031904</item><item>문과대학</item> <!-- 문과대학(97) -->
+        <item>37.588383</item><item>127.032153</item><item>waypoint</item> <!-- (98) -->
+        <item>37.588655</item><item>127.032647</item><item>waypoint</item> <!-- (99) -->
+        <item>37.588868</item><item>127.032880</item><item>waypoint</item> <!-- (100) -->
+        <item>37.588993</item><item>127.033014</item><item>waypoint</item> <!-- (101) -->
+        <item>37.589142</item><item>127.033167</item><item>waypoint</item> <!-- (102) -->
+        <item>37.588585</item><item>127.033593</item><item>중앙광장</item> <!-- 중앙광장(103) -->
+        <item>37.588171</item><item>127.033376</item><item>중앙광장 입구(좌)</item> <!-- 중앙광장 입구(좌)(104) -->
+        <item>37.588806</item><item>127.034124</item><item>중앙광장 입구(우)</item> <!-- 중앙광장 입구(우)(105) -->
+        <item>37.589189</item><item>127.034274</item><item>백주년기념관</item> <!-- 백주년기념관(106) -->
+        <item>37.588964</item><item>127.034641</item><item>waypoint</item> <!-- (107) -->
+        <item>37.588158</item><item>127.034252</item><item>고려대학교 정문</item> <!-- 고려대학교 정문(108) -->
+        <item>37.588122</item><item>127.033868</item><item>waypoint</item> <!-- (109) -->
+        <item>37.587943</item><item>127.033887</item><item>waypoint</item> <!-- (110) -->
+        <item>37.587282</item><item>127.033190</item><item>농구코트(인문계)</item> <!-- 농구코트(인문계)(111) -->
+        <item>37.587195</item><item>127.032729</item><item>waypoint</item> <!-- (112) -->
+        <item>37.589596</item><item>127.033727</item><item>호상</item> <!-- 호상(113) -->
+        <item>37.589775</item><item>127.033931</item><item>waypoint</item> <!-- (114) -->
+        <item>37.589358</item><item>127.035074</item><item>waypoint</item> <!-- (115) -->
+        <item>37.589537</item><item>127.035090</item><item>LG-POSCO 경영관(2)</item> <!-- LG-POSCO 경영관(2)(116) -->
+        <item>37.589624</item><item>127.035798</item><item>고려대역 1번 출구</item> <!-- 고려대역 1번 출구(117) -->
+        <item>37.590013</item><item>127.034492</item><item>waypoint</item> <!-- (118) -->
+        <item>37.590391</item><item>127.034937</item><item>경영본관</item> <!-- 경영본관(119) -->
+        <item>37.587406</item><item>127.029800</item><item>waypoint</item> <!-- (120) -->
+        <item>37.587380</item><item>127.029280</item><item>waypoint</item> <!-- (121) -->
+        <item>37.588970</item><item>127.029216</item><item>개운사</item> <!-- 개운사(122) -->
+        <item>37.590099</item><item>127.033778</item><item>waypoint</item> <!-- (123) -->
+        <item>37.590307</item><item>127.034089</item><item>waypoint</item> <!-- (124) -->
+        <item>37.590566</item><item>127.034658</item><item>waypoint</item> <!-- (125) -->
+        <item>37.590103</item><item>127.035087</item><item>LG-POSCO 경영관(1)</item> <!-- LG-POSCO 경영관(1)(126) -->
+        <item>37.590949</item><item>127.035098</item><item>현대자동차 경영관(1)</item> <!-- 현대자동차 경영관(1)(127) -->
+        <item>37.590413</item><item>127.035490</item><item>현대자동차 경영관(2)</item> <!-- 현대자동차 경영관(2)(128) -->
+        <item>37.591314</item><item>127.035377</item><item>waypoint</item> <!-- (129) -->
+        <item>37.591828</item><item>127.035141</item><item>교우회관</item> <!-- 교우회관(130) -->
+        <item>37.590829</item><item>127.034642</item><item>사범대학 본관</item> <!-- 사범대학 본관(131) -->
+        <item>37.590557</item><item>127.034363</item><item>중앙도서관</item> <!-- 중앙도서관(132) -->
+        <item>37.591071</item><item>127.034320</item><item>waypoint</item> <!-- (133) -->
+        <item>37.591250</item><item>127.034551</item><item>사범대학 신관</item> <!-- 사범대학 신관(134) -->
+        <item>37.591297</item><item>127.034095</item><item>운초우선교육관</item> <!-- 운초우선교육관(135) -->
+        <item>37.591352</item><item>127.033902</item><item>waypoint</item> <!-- (136) -->
+        <item>37.590914</item><item>127.033360</item><item>waypoint</item> <!-- (137) -->
+        <item>37.590812</item><item>127.033446</item><item>waypoint</item> <!-- (138) -->
+        <item>37.590684</item><item>127.033618</item><item>법학관 구관</item> <!-- 법학관 구관(139) -->
+        <item>37.590502</item><item>127.033859</item><item>waypoint</item> <!-- (140) -->
+        <item>37.590251</item><item>127.033537</item><item>waypoint</item> <!-- (141) -->
+        <item>37.590544</item><item>127.033124</item><item>waypoint</item> <!-- (142) -->
+        <item>37.590867</item><item>127.033006</item><item>waypoint</item> <!-- (143) -->
+        <item>37.590748</item><item>127.033086</item><item>해송법학도서관</item> <!-- 해송법학도서관(144) -->
+        <item>37.590718</item><item>127.032786</item><item>법학관 신관</item> <!-- 법학관 신관(145) -->
+        <item>37.590442</item><item>127.032496</item><item>waypoint</item> <!-- (146) -->
+        <item>37.590225</item><item>127.032786</item><item>waypoint</item> <!-- (147) -->
+        <item>37.590097</item><item>127.032604</item><item>동원글로벌리더십홀</item> <!-- 동원글로벌리더십홀(148) -->
+        <item>37.589889</item><item>127.032888</item><item>waypoint</item> <!-- (149) -->
+        <item>37.589710</item><item>127.033242</item><item>대학원</item> <!-- 대학(150) -->
+        <item>37.589821</item><item>127.032625</item><item>waypoint</item> <!-- (151) -->
+        <item>37.589409</item><item>127.032925</item><item>waypoint</item> <!-- (152) -->
+        <item>37.589201</item><item>127.032716</item><item>인촌 김성수 동상</item> <!-- 인촌 김성수 동상(153) -->
+        <item>37.589018</item><item>127.032469</item><item>waypoint</item> <!-- (154) -->
+        <item>37.589400</item><item>127.032437</item><item>본관</item> <!-- 본관(155) -->
+        <item>37.589668</item><item>127.032732</item><item>waypoint</item> <!-- (156) -->
+        <item>37.589141</item><item>127.032142</item><item>waypoint</item> <!-- (157) -->
+        <item>37.589201</item><item>127.031879</item><item>waypoint</item> <!-- (158) -->
+        <item>37.589375</item><item>127.031981</item><item>waypoint</item> <!-- (159) -->
+        <item>37.589452</item><item>127.031327</item><item>waypoint</item> <!-- (160) -->
+        <item>37.589558</item><item>127.030941</item><item>인촌기념관</item> <!-- 인촌기념관(161) -->
+        <item>37.589239</item><item>127.031070</item><item>waypoint</item> <!-- (162) -->
+        <item>37.588844</item><item>127.030555</item><item>수당삼양패컬티하우스</item> <!-- 수당삼양패컬티하우스(163) -->
+        <item>37.590030</item><item>127.031209</item><item>waypoint</item> <!-- (164) -->
+        <item>37.590974</item><item>127.031601</item><item>waypoint</item> <!-- (165) -->
+        <item>37.590421</item><item>127.029273</item><item>waypoint</item> <!-- (166) -->
+        <item>37.590982</item><item>127.028930</item><item>waypoint</item> <!-- (167) -->
+        <item>37.591216</item><item>127.028587</item><item>안암학사(기숙사)</item> <!-- 안암학사(기숙사)(168) -->
+        <item>37.591752</item><item>127.028179</item><item>waypoint</item> <!-- (169) -->
+        <item>37.591905</item><item>127.027235</item><item>CJ인터내셔널 하우스</item> <!-- CJ인터내셔널 하우스(170) -->
+        <item>37.591252</item><item>127.030982</item><item>waypoint</item> <!-- (171) -->
+        <item>37.591146</item><item>127.030285</item><item>고려대학교 출판부</item> <!-- 고려대학교 출판부(172) -->
+        <item>37.591282</item><item>127.029684</item><item>waypoint</item> <!-- (173) -->
+        <item>37.590997</item><item>127.029587</item><item>waypoint</item> <!-- (174) -->
+        <item>37.592242</item><item>127.026647</item><item>waypoint</item> <!-- (175) -->
+        <item>37.592518</item><item>127.026921</item><item>한국학관</item> <!-- 한국학관(176) -->
+        <item>37.592786</item><item>127.027355</item><item>waypoint</item> <!-- (177) -->
+        <item>37.593330</item><item>127.026636</item><item>아이스링크</item> <!-- 아이스링크(178) -->
+        <item>37.591744</item><item>127.026106</item><item>waypoint</item> <!-- (179) -->
+        <item>37.592190</item><item>127.025376</item><item>화정체육관</item> <!-- 화정체육관(180) -->
+        <item>37.591387</item><item>127.025741</item><item>녹지운동장</item> <!-- 녹지운동장(181) -->
+        <item>37.591289</item><item>127.025961</item><item>간호대학</item> <!-- 간호대학, 학군단(182) -->
+        <item>37.590689</item><item>127.025038</item><item>waypoint</item> <!-- (183) -->
+        <item>37.589809</item><item>127.026486</item><item>waypoint</item> <!-- (184) -->
+        <item>37.589711</item><item>127.027183</item><item>waypoint</item> <!-- (185) -->
+        <item>37.589728</item><item>127.024892</item><item>waypoint</item> <!-- (186) -->
+        <item>37.587364</item><item>127.028761</item><item>waypoint</item> <!-- (187) -->
+        <item>37.591018</item><item>127.033200</item><item>CJ법학관</item> <!-- CJ법학관(188) -->
+        <item>37.591252</item><item>127.032932</item><item>법대 후문</item> <!-- 법대 후문(189) -->
+        <item>37.590946</item><item>127.033935</item><item>아세아문제연구소</item> <!-- 아세아문제연구소(190) -->
+        <item>37.589666</item><item>127.029132</item><item>waypoint</item> <!-- (191) -->
+        <item>37.590132</item><item>127.034348</item><item>waypoint</item> <!-- (192) -->
+        <item>37.589595</item><item>127.032023</item><item>다람쥐길</item> <!-- 다람쥐길(193) -->
     </string-array>
 
     <string-array name="suggestion">
-
+        <item>안암역</item>
+        <item>이공계 정문</item>
+        <item>생명과학관 동관</item>
+        <item>우정정보관</item>
+        <item>미래융합기술관</item>
+        <item>애기능생활관 정문</item>
+        <item>정보전산처</item>
+        <item>노벨광장</item>
+        <item>이공계 후문(소울키친)</item>
+        <item>참살이길</item>
+        <item>이학관별관</item>
+        <item>환경실험관</item>
+        <item>애기능 동산</item>
+        <item>애기능생활관 옆문</item>
+        <item>이공계 후문(문화사)</item>
+        <item>제2공학관</item>
+        <item>농구코트(이공계)</item>
+        <item>애기능 학생회관</item>
+        <item>신공학관</item>
+        <item>창의관</item>
+        <item>공학관</item>
+        <item>산학관</item>
+        <item>하나스퀘어 입구(3)</item>
+        <item>아산이학관</item>
+        <item>하나스퀘어 지상</item>
+        <item>하나스퀘어 입구(2)</item>
+        <item>과학도서관</item>
+        <item>하나과학관</item>
+        <item>생명과학관 서관</item>
+        <item>하나스퀘어 입구(1)</item>
+        <item>셔틀버스정류장(이공계)</item>
+        <item>고려대학교병원 응급의료센터</item>
+        <item>고려대학교 안암병원</item>
+        <item>의과대학</item>
+        <item>장례식장</item>
+        <item>정경대 후문</item>
+        <item>정경대학(2)</item>
+        <item>타이거플라자</item>
+        <item>국제관</item>
+        <item>파이빌리지</item>
+        <item>미디어관</item>
+        <item>우당교양관</item>
+        <item>홍보관</item>
+        <item>민주광장</item>
+        <item>학생회관</item>
+        <item>문과대학</item>
+        <item>중앙광장</item>
+        <item>중앙광장 입구(좌)</item>
+        <item>중앙광장 입구(우)</item>
+        <item>백주념기념관</item>
+        <item>고려대학교 정문</item>
+        <item>농구코트(인문계)</item>
+        <item>호상</item>
+        <item>LG-POSCO 경영관(2)</item>
+        <item>고려대역 1번 출구</item>
+        <item>경영본관</item>
+        <item>개운사</item>
+        <item>LG-POSCO 경영관(1)</item>
+        <item>현대자동차 경영관(1)</item>
+        <item>현대자동차 경영관(2)</item>
+        <item>교우회관</item>
+        <item>사범대학 본관</item>
+        <item>중앙도서관</item>
+        <item>사범대학 신관</item>
+        <item>운초우선교육관</item>
+        <item>법학관 구관</item>
+        <item>해송법학도서관</item>
+        <item>법학관 신관</item>
+        <item>동원글로벌리더십홀</item>
+        <item>대학원</item>
+        <item>인촌 김성수 동상</item>
+        <item>본관</item>
+        <item>인촌기념관</item>
+        <item>수당삼양패컬티하우스</item>
+        <item>안암학사(기숙사)</item>
+        <item>CJ인터내셔널 하우스</item>
+        <item>고려대학교 출판부</item>
+        <item>한국학관</item>
+        <item>아이스링크</item>
+        <item>화정체육관</item>
+        <item>녹지운동장</item>
+        <item>간호대학</item>
+        <item>CJ법학관</item>
+        <item>법대 후문</item>
+        <item>아세아문제연구소</item>
+        <item>다람쥐길</item>
     </string-array>
 
     <string-array name="latlng_busroute">
@@ -36,7 +302,6 @@
         <item>37.591634</item><item>127.034077</item><item>0</item>
         <item>37.592119</item><item>127.034909</item><item>0</item>
         <item>37.592480</item><item>127.035521</item><item>0</item>
-
         <item>37.592420</item><item>127.036315</item><item>0</item>
         <item>37.591965</item><item>127.036354</item><item>0</item>
         <item>37.591429</item><item>127.036349</item><item>0</item>
@@ -47,7 +312,6 @@
         <item>37.589371</item><item>127.035823</item><item>0</item>
         <item>37.588801</item><item>127.035228</item><item>0</item>
         <item>37.588312</item><item>127.034734</item><item>0</item>
-
         <item>37.588193</item><item>127.034600</item><item>0</item>
         <item>37.587938</item><item>127.034315</item><item>0</item>
         <item>37.587483</item><item>127.033881</item><item>0</item>
@@ -58,7 +322,6 @@
         <item>37.586348</item><item>127.031231</item><item>0</item>
         <item>37.586307</item><item>127.030441</item><item>1</item> <!-- 정경대 후문, 안암-->
         <item>37.586293</item><item>127.030260</item><item>0</item>
-
         <item>37.586276</item><item>127.029697</item><item>0</item>
         <item>37.586272</item><item>127.029461</item><item>0</item>
         <item>37.586272</item><item>127.029461</item><item>0</item>
@@ -69,7 +332,6 @@
         <item>37.586247</item><item>127.027476</item><item>0</item>
         <item>37.586247</item><item>127.027476</item><item>0</item>
         <item>37.586255</item><item>127.027122</item><item>0</item>
-
         <item>37.586242</item><item>127.026355</item><item>0</item>
         <item>37.586255</item><item>127.025851</item><item>0</item>
         <item>37.586259</item><item>127.025663</item><item>0</item>
@@ -80,7 +342,6 @@
         <item>37.586191</item><item>127.027363</item><item>0</item>
         <item>37.585575</item><item>127.027460</item><item>0</item>
         <item>37.585013</item><item>127.027551</item><item>0</item>
-
         <item>37.584907</item><item>127.027471</item><item>0</item>
         <item>37.584993</item><item>127.027266</item><item>1</item> <!-- 자연계 -->
         <item>37.585269</item><item>127.027567</item><item>0</item>
@@ -91,7 +352,6 @@
         <item>37.586183</item><item>127.027464</item><item>0</item>
         <item>37.586706</item><item>127.027421</item><item>0</item>
         <item>37.586919</item><item>127.027625</item><item>0</item>
-
         <item>37.587102</item><item>127.028006</item><item>0</item>
         <item>37.587531</item><item>127.028339</item><item>0</item>
         <item>37.587850</item><item>127.028350</item><item>0</item>
@@ -102,7 +362,6 @@
         <item>37.588943</item><item>127.027084</item><item>0</item>
         <item>37.588862</item><item>127.026397</item><item>0</item>
         <item>37.589024</item><item>127.025555</item><item>0</item>
-
         <item>37.590006</item><item>127.024777</item><item>0</item>
         <item>37.590610</item><item>127.024932</item><item>0</item>
         <item>37.591171</item><item>127.025519</item><item>1</item> <!-- 화정 -->
@@ -113,7 +372,6 @@
         <item>37.592758</item><item>127.027287</item><item>0</item>
         <item>37.592843</item><item>127.027550</item><item>0</item>
         <item>37.592958</item><item>127.027641</item><item>0</item>
-
         <item>37.592962</item><item>127.028081</item><item>0</item>
         <item>37.592826</item><item>127.028333</item><item>0</item>
         <item>37.592409</item><item>127.028467</item><item>0</item>
