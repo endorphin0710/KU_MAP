@@ -62,9 +62,16 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "우정정보관" + "'" + "," + 5 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정보대학" + "'" + "," + 5 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "미래융합기술관" + "'" + "," + 6 + ")";
+            db.execSQL(insertRow);
+
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "애기능생활관 정문" + "'" + "," + 8 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
@@ -104,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
-                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "제2공학관" + "'" + "," + 29 + ")";
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "제2공학관(현재 철거 후 주차장)" + "'" + "," + 29 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
@@ -149,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "과학도서관" + "'" + "," + 48 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "과도" + "'" + "," + 48 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "하나과학관" + "'" + "," + 49 + ")";
@@ -173,9 +183,15 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "고려대학교 안암병원" + "'" + "," + 59 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "고대병원" + "'" + "," + 59 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "의과대학" + "'" + "," + 64 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "의대" + "'" + "," + 64 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
@@ -184,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정경대 후문" + "'" + "," + 72 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정후" + "'" + "," + 72 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정경대학(2)" + "'" + "," + 74 + ")";
@@ -200,6 +219,9 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "파이빌리지" + "'" + "," + 78 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "PI VILLIAGE" + "'" + "," + 78 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "미디어관" + "'" + "," + 79 + ")";
@@ -209,48 +231,86 @@ public class MainActivity extends AppCompatActivity {
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "우당교양관" + "'" + "," + 81 + ")";
             db.execSQL(insertRow);
             insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "교양관" + "'" + "," + 81 + ")";
+            db.execSQL(insertRow);
+
+            insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "홍보관" + "'" + "," + 82 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "민주광장" + "'" + "," + 86 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "민광" + "'" + "," + 86 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "학생회관" + "'" + "," + 88 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "학관" + "'" + "," + 88 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "문과대학" + "'" + "," + 97 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "문대" + "'" + "," + 97 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "서관" + "'" + "," + 97 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중앙광장" + "'" + "," + 103 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중광" + "'" + "," + 103 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중앙광장 입구(좌)" + "'" + "," + 104 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중광 입구(좌)" + "'" + "," + 104 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중앙광장 입구(우)" + "'" + "," + 105 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중광 입구(우)" + "'" + "," + 105 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "백주년기념관" + "'" + "," + 106 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "백기" + "'" + "," + 106 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "100주년 기념관" + "'" + "," + 106 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "고려대학교 정문" + "'" + "," + 108 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "정문" + "'" + "," + 108 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "농구코트(인문계)" + "'" + "," + 111 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "닭장" + "'" + "," + 111 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "호상" + "'" + "," + 113 + ")";
             db.execSQL(insertRow);
+
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG-POSCO 경영관(2)" + "'" + "," + 116 + ")";
             db.execSQL(insertRow);
@@ -262,6 +322,9 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "경영본관" + "'" + "," + 119 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "경본" + "'" + "," + 119 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "개운사" + "'" + "," + 122 + ")";
@@ -270,14 +333,24 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LG-POSCO 경영관(1)" + "'" + "," + 126 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "엘지포스코 경영관(1)" + "'" + "," + 126 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "현대자동차 경영관(1)" + "'" + "," + 127 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "현차관(1)" + "'" + "," + 127 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "현대자동차 경영관(2)" + "'" + "," + 128 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "현차관(2)" + "'" + "," + 128 + ")";
+            db.execSQL(insertRow);
+
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "교우회관" + "'" + "," + 130 + ")";
             db.execSQL(insertRow);
@@ -289,6 +362,9 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중앙도서관" + "'" + "," + 132 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "중도" + "'" + "," + 132 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "사범대학 신관" + "'" + "," + 134 + ")";
@@ -297,21 +373,42 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "운초우선교육관" + "'" + "," + 135 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "교육관" + "'" + "," + 135 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법학관 구관" + "'" + "," + 139 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법구" + "'" + "," + 139 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "구법" + "'" + "," + 139 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "해송법학도서관" + "'" + "," + 144 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "해도" + "'" + "," + 144 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법학관 신관" + "'" + "," + 145 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법신" + "'" + "," + 145 + ")";
+            db.execSQL(insertRow);insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "신법" + "'" + "," + 145 + ")";
+            db.execSQL(insertRow);
+
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "동원글로벌리더십홀" + "'" + "," + 148 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "동글리" + "'" + "," + 148 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
@@ -345,6 +442,9 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "고려대학교 출판부" + "'" + "," + 172 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "출판부" + "'" + "," + 172 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "한국학관" + "'" + "," + 176 + ")";
@@ -369,9 +469,18 @@ public class MainActivity extends AppCompatActivity {
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "CJ법학관" + "'" + "," + 188 + ")";
             db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "LAW SCHOOL" + "'" + "," + 188 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "로스쿨" + "'" + "," + 188 + ")";
+            db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +
                     "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법대 후문" + "'" + "," + 189 + ")";
+            db.execSQL(insertRow);
+            insertRow = "INSERT INTO LOCATION_INFO " +
+                    "(NAME, LOCATION_INDEX) VALUES (" + "'"+ "법후" + "'" + "," + 189 + ")";
             db.execSQL(insertRow);
 
             insertRow = "INSERT INTO LOCATION_INFO " +

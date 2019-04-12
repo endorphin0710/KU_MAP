@@ -14,7 +14,7 @@
         <item>37.585140</item><item>127.028290</item><item>우정정보관</item> <!-- 우정정보관(5) -->
         <item>37.584832</item><item>127.028019</item><item>미래융합기술관</item> <!-- 미래융합기술관(6) -->
         <item>37.584928</item><item>127.027520</item><item>waypoint</item> <!-- (7) -->
-        <item>37.584516</item><item>127.027842</item><item>애기능생활관 정문</item> <!-- (8) -->
+        <item>37.584516</item><item>127.027842</item><item>애기능생활관 정문</item> <!-- 애기능생활관 정문(8) -->
         <item>37.584337</item><item>127.028011</item><item>waypoint</item> <!-- (9) -->
         <item>37.584539</item><item>127.028443</item><item>정보전산처</item> <!-- 정보전산처, 제1실험(10) -->
         <item>37.583614</item><item>127.028416</item><item>노벨광장</item> <!-- 노벨광(11) -->
@@ -207,7 +207,7 @@
         <item>안암역</item>
         <item>이공계 정문</item>
         <item>생명과학관 동관</item>
-        <item>우정정보관</item>
+        <item>정보대학</item><item>우정정보관</item>
         <item>미래융합기술관</item>
         <item>애기능생활관 정문</item>
         <item>정보전산처</item>
@@ -219,7 +219,7 @@
         <item>애기능 동산</item>
         <item>애기능생활관 옆문</item>
         <item>이공계 후문(문화사)</item>
-        <item>제2공학관</item>
+        <item>제2공학관(현재 철거 후 주차장)</item>
         <item>농구코트(이공계)</item>
         <item>애기능 학생회관</item>
         <item>신공학관</item>
@@ -230,49 +230,49 @@
         <item>아산이학관</item>
         <item>하나스퀘어 지상</item>
         <item>하나스퀘어 입구(2)</item>
-        <item>과학도서관</item>
+        <item>과학도서관</item><item>과도</item>
         <item>하나과학관</item>
         <item>생명과학관 서관</item>
         <item>하나스퀘어 입구(1)</item>
         <item>셔틀버스정류장(이공계)</item>
         <item>고려대학교병원 응급의료센터</item>
-        <item>고려대학교 안암병원</item>
-        <item>의과대학</item>
+        <item>고려대학교 안암병원</item><item>고대병원</item>
+        <item>의과대학</item><item>의대</item>
         <item>장례식장</item>
-        <item>정경대 후문</item>
+        <item>정경대 후문</item><item>정후</item>
         <item>정경대학(2)</item>
         <item>타이거플라자</item>
         <item>국제관</item>
-        <item>파이빌리지</item>
+        <item>파이빌리지</item><item>PI VILLIAGE</item>
         <item>미디어관</item>
-        <item>우당교양관</item>
+        <item>우당교양관</item><item>교양관</item>
         <item>홍보관</item>
-        <item>민주광장</item>
-        <item>학생회관</item>
-        <item>문과대학</item>
-        <item>중앙광장</item>
-        <item>중앙광장 입구(좌)</item>
-        <item>중앙광장 입구(우)</item>
-        <item>백주념기념관</item>
-        <item>고려대학교 정문</item>
-        <item>농구코트(인문계)</item>
+        <item>민주광장</item><item>민광</item>
+        <item>학생회관</item><item>학관</item>
+        <item>문과대학</item><item>문대</item><item>서관</item>
+        <item>중앙광장</item><item>중광</item>
+        <item>중앙광장 입구(좌)</item><item>중광 입구(좌)</item>
+        <item>중앙광장 입구(우)</item><item>중광 입구(우)</item>
+        <item>백주년기념관</item><item>백기</item><item>100주년기념관</item>
+        <item>고려대학교 정문</item><item>정문</item>
+        <item>농구코트(인문계)</item><item>닭장</item>
         <item>호상</item>
         <item>LG-POSCO 경영관(2)</item>
         <item>고려대역 1번 출구</item>
-        <item>경영본관</item>
+        <item>경영본관</item><item>경본</item>
         <item>개운사</item>
-        <item>LG-POSCO 경영관(1)</item>
-        <item>현대자동차 경영관(1)</item>
-        <item>현대자동차 경영관(2)</item>
+        <item>LG-POSCO 경영관(1)</item><item>엘지포스코 경영관(1)</item>
+        <item>현대자동차 경영관(1)</item><item>현차관(1)</item>
+        <item>현대자동차 경영관(2)</item><item>현차관(2)</item>
         <item>교우회관</item>
         <item>사범대학 본관</item>
-        <item>중앙도서관</item>
+        <item>중앙도서관</item><item>중도</item>
         <item>사범대학 신관</item>
-        <item>운초우선교육관</item>
-        <item>법학관 구관</item>
-        <item>해송법학도서관</item>
-        <item>법학관 신관</item>
-        <item>동원글로벌리더십홀</item>
+        <item>운초우선교육관</item><item>교육관</item>
+        <item>법학관 구관</item><item>법구</item><item>구법</item>
+        <item>해송법학도서관</item><item>해도</item>
+        <item>법학관 신관</item><item>법신</item><item>신법</item>
+        <item>동원글로벌리더십홀</item><item>동글리</item>
         <item>대학원</item>
         <item>인촌 김성수 동상</item>
         <item>본관</item>
@@ -280,14 +280,14 @@
         <item>수당삼양패컬티하우스</item>
         <item>안암학사(기숙사)</item>
         <item>CJ인터내셔널 하우스</item>
-        <item>고려대학교 출판부</item>
+        <item>고려대학교 출판부</item><item>출판부</item>
         <item>한국학관</item>
         <item>아이스링크</item>
         <item>화정체육관</item>
         <item>녹지운동장</item>
         <item>간호대학</item>
-        <item>CJ법학관</item>
-        <item>법대 후문</item>
+        <item>CJ법학관</item><item>로스쿨</item><item>LAW SCHOOL</item>
+        <item>법대 후문</item><item>법후</item>
         <item>아세아문제연구소</item>
         <item>다람쥐길</item>
     </string-array>

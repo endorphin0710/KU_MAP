@@ -43,7 +43,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
@@ -59,8 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private A_STAR astar;
 
     private ImageButton btn_pathfind;
-    private ImageButton btn_bus_route;
-    private ImageButton btn_bus_info;
     private Button btn_set_source;
     private Button btn_set_dest;
     private Button btn_hide_marker;
@@ -68,26 +65,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private AutoCompleteTextView tv_source;
     private AutoCompleteTextView tv_dest;
     private ConstraintLayout markerWindow;
-    private ConstraintLayout busLayout;
-    private ConstraintLayout busInfoLayout;
 
     private String[] arr_latlng;
-    private String[] arr_buslatlng;
-    private LatLng[] latlngs_bus;
     private LatLng[] latlngs;
     private ArrayList<Node> nodes;
     private ArrayList<Integer> paths;
-    private ArrayList<Integer> bus_location;
 
-    private int interval_renew;
     private long backbtn_pressed_time;
     private int source;
     private int dest;
     private int marker_hidden = 1;
 
-    private String busMessage;
     private boolean pathfind_start;
-    private boolean busroute_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +90,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_title = findViewById(R.id.tv_title);
         tv_source = findViewById(R.id.actv_source);
         tv_dest = findViewById(R.id.actv_dest);
-        btn_bus_route = findViewById(R.id.bus_route);
-        btn_bus_info = findViewById(R.id.bus_info);
         btn_pathfind = findViewById(R.id.btn_pathfind);
         btn_set_source = findViewById(R.id.setSource);
         btn_set_dest = findViewById(R.id.setDest);
         btn_hide_marker = findViewById(R.id.btn_hide_marker);
         markerWindow = findViewById(R.id.markerWindow);
-        busLayout = findViewById(R.id.busLayout);
-        busInfoLayout = findViewById(R.id.busInfoLayout);
         astar = new A_STAR();
         nodes = new ArrayList<>();
         paths = new ArrayList<>();
@@ -120,14 +105,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i = 0; i < latlngs.length; i++){
             latlngs[i] = new LatLng(Double.valueOf(arr_latlng[3*i]),Double.valueOf(arr_latlng[3*i+1]));
         }
-
-        /** Instantiate bus route markers **/
-        arr_buslatlng = getResources().getStringArray(R.array.latlng_busroute);
-        latlngs_bus = new LatLng[87];
-        for(int i = 0; i < latlngs_bus.length; i++){
-            latlngs_bus[i] = new LatLng(Double.valueOf(arr_buslatlng[3*i]),Double.valueOf(arr_buslatlng[3*i+1]));
-        }
-        bus_location = new ArrayList<>();
 
         /** Nodes initialization **/
         for(int i = 0; i < latlngs.length; i++){
@@ -146,11 +123,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startLocationService();
         }
 
-        /** MarkerWindow & bus layout & time_tv set INVISIBLE **/
+        /** MarkerWindow & time_tv set INVISIBLE **/
         markerWindow.setVisibility(View.INVISIBLE);
-        busLayout.setVisibility(View.INVISIBLE);
-        busInfoLayout.setVisibility(View.INVISIBLE);
-
 
         /** Get suggestion array from resource **/
         String[] suggestions = getResources().getStringArray(R.array.suggestion);
@@ -228,11 +202,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        /** Thread start **/
-        Runnable runnable = new TimeRunner();
-        Thread timeThread= new Thread(runnable);
-        timeThread.start();
-
         /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
@@ -299,71 +268,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        /** Bus route & real time location button click listener **/
-        btn_bus_route.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(busroute_on){
-                    mMap.clear();
-                    if(pathfind_start){
-                        drawPaths(paths);
-                    }else{
-                        if(marker_hidden == 0){
-                            init_markers();
-                        }
-                    }
-                    busroute_on = false;
-                }else{
-                    if(busMessage != ""){
-                        Toast.makeText(getApplicationContext(), busMessage, Toast.LENGTH_SHORT).show();
-                    }
-                    update_bus_location(bus_location);
-                    busroute_on = true;
-                }
-                busLayoutFold();
-            }
-        });
-
-        /** Shuttle timetable button click listener **/
-        btn_bus_info.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                busInfoLayoutFold(null);
-            }
-        });
-
         /** Marker hide button click listener **/
         btn_hide_marker.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(busroute_on){
-                    if(marker_hidden == 1){
-                        btn_hide_marker.setText("건물 숨기기");
-                        marker_hidden = 0;
-                    }else{
-                        btn_hide_marker.setText("건물 나타내기");
-                        marker_hidden = 1;
-                    }
-                    update_bus_location(bus_location);
-                }else{
-                    if(marker_hidden == 1){
-                        btn_hide_marker.setText("건물 숨기기");
-                        marker_hidden = 0;
-                        if(pathfind_start){
-                            mMap.clear();
-                            init_markers(source, dest);
-                            drawPaths(paths);
-                        }else{
-                            init_markers();
-                        }
-                    }else{
-                        btn_hide_marker.setText("건물 나타내기");
-                        marker_hidden = 1;
+                if(marker_hidden == 1){
+                    btn_hide_marker.setText("건물 숨기기");
+                    marker_hidden = 0;
+                    if(pathfind_start){
                         mMap.clear();
-                        if(pathfind_start){
-                            init_markers(source, dest);
-                            drawPaths(paths);
-                        }
+                        init_markers(source, dest);
+                        drawPaths(paths);
+                    }else{
+                        init_markers();
+                    }
+                }else{
+                    btn_hide_marker.setText("건물 나타내기");
+                    marker_hidden = 1;
+                    mMap.clear();
+                    if(pathfind_start){
+                        init_markers(source, dest);
+                        drawPaths(paths);
                     }
                 }
             }
@@ -482,45 +407,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /** Make markers on circulator shuttle route **/
-    private void init_bus_markers(){
-        PolylineOptions polyLine = new PolylineOptions().width(10).color(0xFF990000);
-        for(int i = 0; i < latlngs_bus.length; i++){
-            if(arr_buslatlng[3*i+2].equals("1")){
-                mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_busstop)).title("busmarker"));
-            }
-            polyLine.add(latlngs_bus[i]);
-        }
-        mMap.addPolyline(polyLine);
-    }
-
-    /** Update real-time shuttle location **/
-    private void update_bus_location(ArrayList<Integer> buses){
-        mMap.clear();
-        if(pathfind_start){
-            drawPaths(paths);
-            if(marker_hidden == 0){
-                mMap.addMarker(new MarkerOptions().position(latlngs[source]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_source_flag)).title(nodes.get(source).value));
-                mMap.addMarker(new MarkerOptions().position(latlngs[dest]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_destination_flag)).title(nodes.get(dest).value));
-            }
-        }else{
-            if(marker_hidden == 0) {
-                init_markers();
-            }
-        }
-        init_bus_markers();
-        for(Integer i : buses){
-            mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_bus_current)).title("busmarker"));
-        }
-
-    }
-
     /** On marker clicked **/
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(marker.getTitle().equals("busmarker")){
-            return true;
-        }
+
         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
 
         markerWindow.setVisibility(View.VISIBLE);
@@ -537,12 +427,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         markerWindowSlideDown(null);
-        if (busLayout.getVisibility() == View.VISIBLE) {
-            busLayout.setVisibility(View.INVISIBLE);
-        }
-        if(busInfoLayout.getVisibility() == View.VISIBLE){
-            busInfoLayout.setVisibility(View.INVISIBLE);
-        }
     }
 
     /** Path find **/
@@ -560,13 +444,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             /** Clear google map & add markers **/
             mMap.clear();
-            if(busroute_on){
-                init_bus_markers();
-                init_bus_markers();
-                for(Integer i : bus_location){
-                    mMap.addMarker(new MarkerOptions().position(latlngs_bus[i]).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_bus_current)).title("busmarker"));
-                }
-            }
             if(marker_hidden == 0) {
                 init_markers(source, dest);
             }else{
@@ -591,6 +468,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 distance_total += cal_distance(nodes.get(paths.get(i)), nodes.get(paths.get(i+1)));
             }
             mMap.addPolyline(polyLine);
+            LatLng source_latlng = new LatLng(latlngs[paths.get(0)].latitude, latlngs[paths.get(0)].longitude);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source_latlng, 17));
             Toast.makeText(this, "예상 소요 시간 : " + Math.round((distance_total/1.4)/60) + "분 " + Math.round((distance_total/1.4)%60) +"초", Toast.LENGTH_SHORT).show();
         }
     }
@@ -655,104 +534,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return deg * (Math.PI/180.0);
     }
 
-    /**  Shuttle functionality onclick method **/
-    public void busOnClick(View v){
-        busLayoutFold();
-    }
-
-    /** Fold shuttle window **/
-    private void busLayoutFold(){
-        if(busLayout.getVisibility() == View.VISIBLE){
-            busLayout.setVisibility(View.INVISIBLE);
-        }else{
-            busLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /** Fold shuttle info window **/
-    public void busInfoLayoutFold(View v){
-        if(busInfoLayout.getVisibility() == View.VISIBLE){
-            busInfoLayout.setVisibility(View.INVISIBLE);
-        }else{
-            onMapClick(new LatLng(37.589503, 127.032323));
-            busInfoLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    class TimeRunner implements Runnable{
-
-        @Override
-        public void run() {
-            while(!Thread.currentThread().isInterrupted()){
-                try {
-                    shuttle();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }catch(Exception e){
-                }
-            }
-        }
-    }
-
-    private void shuttle() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                try{
-                    Date date = new Date();
-                    int day = date.getDay();
-                    int hours = date.getHours();
-                    int minutes = date.getMinutes();
-                    int seconds = date.getSeconds();
-                    interval_renew = seconds % 10;
-                    if( day == 0 || day == 6 ){
-                        busMessage = "주말에는 셔틀버스를 운영하지 않습니다.";
-                    }else if((hours <= 7 || (hours == 8 && minutes < 25)) || ((hours >= 19) || (hours == 18 && minutes > 15))){
-                        busMessage = "현재 운영중인 셔틀버스가 없습니다.";
-                    }else{
-                        busMessage = "";
-                        if((hours == 8 && minutes == 25 && seconds == 0) || (hours == 8 && minutes == 35 && seconds == 0) || (hours == 8 && minutes == 45 && seconds == 0) || (hours == 8 && minutes == 55 && seconds == 0) ||
-                           (hours == 9 && minutes == 0 && seconds == 0) || (hours == 9 && minutes == 10 && seconds == 0) || (hours == 9 && minutes == 20 && seconds == 0) || (hours == 9 && minutes == 30 && seconds == 0) || (hours == 9 && minutes == 40 && seconds == 0) || (hours == 9 && minutes == 50 && seconds == 0) ||
-                           (hours == 10 && minutes == 0 && seconds == 0) || (hours == 10 && minutes == 10 && seconds == 0) || (hours == 10 && minutes == 20 && seconds == 0) || (hours == 10 && minutes == 30 && seconds == 0) || (hours == 10 && minutes == 40 && seconds == 0) || (hours == 10 && minutes == 50 && seconds == 0) ||
-                           (hours == 11 && minutes == 0 && seconds == 0) || (hours == 11 && minutes == 10 && seconds == 0) || (hours == 11 && minutes == 20 && seconds == 0) || (hours == 11 && minutes == 25 && seconds == 0) || (hours == 11 && minutes == 30 && seconds == 0) || (hours == 11 && minutes == 35 && seconds == 0) || (hours == 11 && minutes == 45 && seconds == 0) || (hours == 11 && minutes == 55 && seconds == 0) ||
-                           (hours == 12 && minutes == 40 && seconds == 0) || (hours == 12 && minutes == 50 && seconds == 0) ||
-                           (hours == 13 && minutes == 0 && seconds == 0) || (hours == 13 && minutes == 10 && seconds == 0) || (hours == 13 && minutes == 20 && seconds == 0) || (hours == 13 && minutes == 25 && seconds == 0) || (hours == 13 && minutes == 30 && seconds == 0) || (hours == 13 && minutes == 35 && seconds == 0) || (hours == 13 && minutes == 45 && seconds == 0) || (hours == 13 && minutes == 55 && seconds == 0) ||
-                           (hours == 14 && minutes == 0 && seconds == 0) || (hours == 14 && minutes == 10 && seconds == 0) || (hours == 14 && minutes == 20 && seconds == 0) || (hours == 14 && minutes == 30 && seconds == 0) || (hours == 14 && minutes == 40 && seconds == 0) || (hours == 14 && minutes == 50 && seconds == 0) ||
-                           (hours == 15 && minutes == 0 && seconds == 0) || (hours == 15 && minutes == 10 && seconds == 0) || (hours == 15 && minutes == 20 && seconds == 0) || (hours == 15 && minutes == 30 && seconds == 0) || (hours == 15 && minutes == 40 && seconds == 0) || (hours == 15 && minutes == 50 && seconds == 0) ||
-                           (hours == 16 && minutes == 0 && seconds == 0) || (hours == 16 && minutes == 20 && seconds == 0) || (hours == 16 && minutes == 40 && seconds == 0) ||
-                           (hours == 17 && minutes == 0 && seconds == 0) || (hours == 17 && minutes == 20 && seconds == 0) || (hours == 17 && minutes == 40 && seconds == 0) || (hours == 17 && minutes == 50 && seconds == 0)){
-                            bus_location.add(0);
-                            if(busroute_on) {
-                                update_bus_location(bus_location);
-                            }
-                        }
-                        if(interval_renew == 9 && busroute_on){
-                            for(int i = 0; i < bus_location.size(); i++){
-                                int loc = bus_location.get(i);
-                                if(loc > 87){
-                                    bus_location.remove(i);
-                                    update_bus_location(bus_location);
-                                    continue;
-                                }
-                                loc += 1;
-                                bus_location.set(i, loc);
-                            }
-                            update_bus_location(bus_location);
-                        }
-                    }
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
-    }
-
     /** Set edge information for every nodes **/
     private void set_cost(){
-        set_adjacency(nodes.get(0), new int[]{1,14,16,121});
+        set_adjacency(nodes.get(0), new int[]{1,14,121});
         set_adjacency(nodes.get(1), new int[]{2,56,57,0});
-        set_adjacency(nodes.get(2), new int[]{1,52,53,3});
+        set_adjacency(nodes.get(2), new int[]{1,52,3});
         set_adjacency(nodes.get(3), new int[]{2,53,54,7,4,5});
         set_adjacency(nodes.get(4), new int[]{3,5});
         set_adjacency(nodes.get(5), new int[]{4,3,6});
@@ -803,7 +589,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         set_adjacency(nodes.get(50), new int[]{52,51,45});
         set_adjacency(nodes.get(51), new int[]{50,53});
         set_adjacency(nodes.get(52), new int[]{2,50,53});
-        set_adjacency(nodes.get(53), new int[]{2,3,51,52});
+        set_adjacency(nodes.get(53), new int[]{3,51,52});
         set_adjacency(nodes.get(54), new int[]{3,7,48});
         set_adjacency(nodes.get(55), new int[]{49,57});
         set_adjacency(nodes.get(56), new int[]{1,59,60});

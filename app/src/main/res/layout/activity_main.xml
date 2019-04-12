@@ -8,10 +8,12 @@
 
     <ImageView
         android:id="@+id/mainImageView"
-        android:src="@drawable/main"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_title"
@@ -19,16 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="선배들이 알려주는 고려대 길의 모든 것"
-        android:textSize="20dp"
+        android:text="고려대 길의 모든 것"
         android:textColor="@color/white"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/textKUMAP" />
 
     <TextView
         android:id="@+id/textKUCC"
@@ -53,15 +53,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="KU MAP"
-        android:textStyle="bold"
-        android:textSize="60dp"
         android:textColor="#DC143C"
+        android:textSize="60dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
